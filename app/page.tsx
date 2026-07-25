@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
 import Image from "next/image";
 import Link from "next/link";
+import ProductsPage from "./products/page";
+import SpecialProducts from "@/components/ui/special-products";
 
 export default async function Home() {
   const { data: products, error } = await supabase
@@ -29,7 +31,6 @@ export default async function Home() {
           items-center
           "
         >
-
           {/* Text */}
           <div className="space-y-6 text-center md:text-left">
 
@@ -46,7 +47,6 @@ export default async function Home() {
             ">
               Welcome to my Ecommerce
             </h1>
-
             <p className="
               text-lg 
               text-gray-600 
@@ -57,8 +57,6 @@ export default async function Home() {
               Discover the latest products at the best prices.
               Quality products with modern designs.
             </p>
-
-
             <Button
               render={<Link href="/products" />}
               variant="default"
@@ -71,10 +69,7 @@ export default async function Home() {
             >
               Browse All Products
             </Button>
-
           </div>
-
-
           {/* Product Image */}
           <div className="
             relative
@@ -99,7 +94,6 @@ export default async function Home() {
                 group-hover:scale-110
               "
             />
-
             <div className="
               absolute
               inset-0
@@ -108,8 +102,6 @@ export default async function Home() {
               via-transparent
               to-transparent
             " />
-
-
             <div
               className="
               absolute
@@ -117,7 +109,6 @@ export default async function Home() {
               right-6
               text-white
               "
-              dir="rtl"
             >
               <h3 className="
                 text-2xl
@@ -135,9 +126,7 @@ export default async function Home() {
                 ${products[0].price}
               </p>
             </div>
-
           </div>
-
         </div>
       </section>
 
@@ -151,7 +140,7 @@ export default async function Home() {
       ">
         <Carousel products={products} />
       </section>
-
+      <SpecialProducts/>
 
     </main>
   );
