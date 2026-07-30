@@ -1,13 +1,8 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
 import { Product, ProductContextType } from '@/types/type';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
-);
+import { supabase } from '@/lib/supabase';
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
@@ -15,13 +10,7 @@ export function ProductProvider({ children }: { children: React.ReactNode }) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-useEffect(() => {
-  console.log("Context Mounted");
 
-  return () => {
-    console.log("Context Unmounted");
-  };
-}, []);
 
   useEffect(() => {
     async function fetchProducts() {

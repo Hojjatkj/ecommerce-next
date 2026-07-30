@@ -8,6 +8,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Product } from "@/types/type";
+import Image from "next/image";
 
 
 interface CarouselProps {
@@ -42,10 +43,11 @@ export const Carousel = ({ products }: CarouselProps) => {
               
               {/* بخش تصویر: در دسکتاپ فقط نیمی از عرض را می‌گیرد تا زشت و بزرگ نشود */}
               <div className="relative w-full md:w-2/3 h-64 md:h-full bg-gray-900 overflow-hidden group shrink-0">
-                <img
+                <Image
                   src={product.image}
                   alt={product.title}
-                  className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                   loading={index === 0 ? "eager" : "lazy"}
                 />
               </div>

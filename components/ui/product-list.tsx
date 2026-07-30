@@ -5,6 +5,7 @@ import ProductCard from "./product-card";
 import { useMemo, useState } from "react";
 import ProductSearch from "./ProductSearch";
 import { useDelayedFlag } from "@/hooks/useDelayedFlag";
+import { getCategoryName } from "@/lib/utils";
 
 
 
@@ -23,7 +24,7 @@ export default function ProductList({ products }: ProductsListProps) {
 
             return (
                 p.title.toLowerCase().includes(q) ||
-                p.categories?.name.toLowerCase().includes(q) ||
+               getCategoryName(p).toLowerCase().includes(q) ||
                 p.description?.toLowerCase().includes(q)
             );
         });
@@ -38,7 +39,7 @@ export default function ProductList({ products }: ProductsListProps) {
 
     return (
         <div>
-            <h2 className="text-xl font-bold  mb-4">Products</h2>
+           
             <ProductSearch onSearch={setSearchTerm} />
 
 

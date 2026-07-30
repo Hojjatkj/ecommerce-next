@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import SpecialProducts from "@/components/ui/special-products";
-import useProducts from "@/hooks/useProducts";
+import useFilteredProducts from "@/hooks/useFilteredProducts";
 import Loading from "@/components/ui/Loading";
 
 export default function Home() {
 
-  const { products, loading } = useProducts({ categoryId: 2 });
+  const { products, loading } = useFilteredProducts({ categoryId: 2 });
 
   if (loading) {
     return <Loading/>
@@ -81,7 +81,6 @@ export default function Home() {
             bg-white
           ">
             <Image
-              unoptimized
               alt={products[0].title}
               width={600}
               height={600}

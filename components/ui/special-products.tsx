@@ -1,11 +1,11 @@
 'use client';
 
 import ProductList from '@/components/ui/product-list';
-import useProducts from '@/hooks/useProducts';
+import useFilteredProducts from '@/hooks/useFilteredProducts';
 
 
 export default function SpecialProducts() {
-const { products, loading } = useProducts({ onlyDiscounts: true, limit: 10 });
+const { products, loading } = useFilteredProducts({ onlyDiscounts: true, limit: 10 });
 
   if (loading) return <p className="p-4">در حال دریافت اطلاعات...</p>;
 

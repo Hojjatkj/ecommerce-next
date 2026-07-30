@@ -1,5 +1,7 @@
 // components/ProductCard.tsx
+import { getCategoryName } from "@/lib/utils";
 import { Product } from "@/types/type";
+
 
 interface ProductCardProps {
   product: Product;
@@ -32,7 +34,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <img
             src={product.image}
             alt={product.title}
-            className="absolute transition-transform duration-300 ease-in-out group-hover:scale-105 inset-0 h-full w-full object-cover object-center"
+            className="absolute  transition-transform duration-300 ease-in-out group-hover:scale-105 inset-0 h-full w-full object-cover object-center"
           />
         </div>
 
@@ -61,9 +63,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
         <span>category :</span>
         <span className="font-semibold text-blue-600">
-          {Array.isArray(product.categories)
-            ? product.categories[0]?.name ?? "بدون نام"
-            : product.categories?.name ?? "بدون نام"}
+          {getCategoryName(product)}
         </span>
       </div>
     </div>

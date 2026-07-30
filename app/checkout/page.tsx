@@ -1,5 +1,5 @@
 
-export default function CheckoutaPage() {
+export default function CheckoutPage() {
     return (
         <div>
             Checkout
