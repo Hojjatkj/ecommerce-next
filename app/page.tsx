@@ -1,18 +1,19 @@
+'use client'
 import { Carousel } from "@/components/main/carousel";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/lib/supabase";
 import Image from "next/image";
 import Link from "next/link";
-import ProductsPage from "./products/page";
 import SpecialProducts from "@/components/ui/special-products";
+import useProducts from "@/hooks/useProducts";
+import Loading from "@/components/ui/Loading";
 
-export default async function Home() {
-  const { data: products, error } = await supabase
-    .from("products")
-    .select("*")
-    .limit(5);
+export default function Home() {
 
-  if (error) return <p>{error.message}</p>;
+  const { products, loading } = useProducts({ categoryId: 2 });
+
+  if (loading) {
+    return <Loading/>
+  }
 
   if (!products || products.length === 0) {
     return <p>No products found</p>;
@@ -140,7 +141,7 @@ export default async function Home() {
       ">
         <Carousel products={products} />
       </section>
-      <SpecialProducts/>
+      <SpecialProducts />
 
     </main>
   );
