@@ -12,7 +12,7 @@ export default function Home() {
   const { products, loading } = useFilteredProducts({ categoryId: 2 });
 
   if (loading) {
-    return <Loading/>
+    return <Loading />
   }
 
   if (!products || products.length === 0) {
@@ -140,8 +140,9 @@ export default function Home() {
       ">
         <Carousel products={products} />
       </section>
-      <SpecialProducts />
-
+      <div className=" bg-gray-200 m-4">
+        <SpecialProducts />
+      </div>
     </main>
   );
 }

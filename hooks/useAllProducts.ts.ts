@@ -8,7 +8,7 @@ interface UseProductsOptions {
   categoryId?: number;
 }
 
-export default function useProducts(options?: UseProductsOptions) {
+export default function UseAllProductsOptions (options?: UseProductsOptions) {
   const { products, loading, error } = useProductsContext();
 
   let result = products;

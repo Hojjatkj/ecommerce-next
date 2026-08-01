@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Product, ProductContextType } from '@/types/type';
 import { supabase } from '@/lib/supabase';
+import { PRODUCT_SELECT_QUERY } from '@/lib/queries';
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
@@ -16,19 +17,7 @@ export function ProductProvider({ children }: { children: React.ReactNode }) {
     async function fetchProducts() {
       const { data, error:fetchError } = await supabase
         .from('products')
-        .select(`
-          id,
-          title,
-          price,
-          discount_percent,
-          image,
-          description,
-          category_id,
-          categories (
-            id,
-            name
-          )
-        `)
+        .select(PRODUCT_SELECT_QUERY)
         .order('id', { ascending: false });
 
       if (fetchError) {

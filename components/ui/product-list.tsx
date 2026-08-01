@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import ProductSearch from "./ProductSearch";
 import { useDelayedFlag } from "@/hooks/useDelayedFlag";
 import { getCategoryName } from "@/lib/utils";
+import ProductGrid from "./product-grid";
 
 
 
@@ -24,7 +25,7 @@ export default function ProductList({ products }: ProductsListProps) {
 
             return (
                 p.title.toLowerCase().includes(q) ||
-               getCategoryName(p).toLowerCase().includes(q) ||
+                getCategoryName(p).toLowerCase().includes(q) ||
                 p.description?.toLowerCase().includes(q)
             );
         });
@@ -38,10 +39,11 @@ export default function ProductList({ products }: ProductsListProps) {
     }
 
     return (
-        <div>
-           
-            <ProductSearch onSearch={setSearchTerm} />
-
+        <div >
+            <div className="flex flex-col md:flex-row p-4 m-2 gap-6 justify-center items-center">
+                <h2 className="text-xl font-bold">explore for Products</h2>
+                <ProductSearch onSearch={setSearchTerm} />
+            </div>
 
             {
                 filteredProducts.length === 0 ? (
@@ -52,11 +54,7 @@ export default function ProductList({ products }: ProductsListProps) {
                         <img src="./empty-box.png" alt="" className="animate-float w-1/8" />
                     </div>
                 ) :
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                        {filteredProducts.map((product) => (
-                            <ProductCard key={product.id} product={product} />
-                        ))}
-                    </div>
+                    <ProductGrid products={products} />
             }
         </div>
 

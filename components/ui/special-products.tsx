@@ -1,6 +1,6 @@
 'use client';
 
-import ProductList from '@/components/ui/product-list';
+import ProductGrid from '@/components/ui/product-grid';
 import useFilteredProducts from '@/hooks/useFilteredProducts';
 
 
@@ -12,7 +12,7 @@ const { products, loading } = useFilteredProducts({ onlyDiscounts: true, limit: 
   return (
     <div className="p-6">
       <h2 className="text-xl font-bold mb-4">پیشنهادهای ویژه 🔥</h2>
-      <ProductList products={products} />
+      <ProductGrid products={products} />
     </div>
   );
 }

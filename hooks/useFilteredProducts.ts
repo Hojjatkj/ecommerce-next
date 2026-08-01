@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Product } from '@/types/type';
+import { PRODUCT_SELECT_QUERY } from '@/lib/queries';
 
 interface UseFilteredProductsOptions {
   onlyDiscounts?: boolean;
@@ -20,10 +21,7 @@ export default function useFilteredProducts(options?: UseFilteredProductsOptions
 
       let query = supabase
         .from('products')
-        .select(`
-          id, title, price, discount_percent, image, description, category_id,
-          categories ( id, name )
-        `);
+        .select(PRODUCT_SELECT_QUERY);
 
       if (options?.onlyDiscounts) {
         query = query.gt('discount_percent', 0).order('discount_percent', { ascending: false });
