@@ -5,16 +5,21 @@ export interface Category {
   name: string;
 }
 
+export interface ProductImage {
+  id: number;
+  url: string;
+  sort_order: number;
+}
+
 export interface Product {
   id: number;
   title: string;
   price: number;
   discount_percent: number;
-  final_price: number; // قیمت محاسبه‌شده پس از تخفیف
-  image: string;
   category_id: number;
   description?: string;
-  categories: Pick<Category, "name"> | null; // فقط فیلد name
+  categories: Pick<Category, "name"> | null;
+  product_images: ProductImage[];   // ← جای image: string
 }
 
 interface UseProductsOptions {

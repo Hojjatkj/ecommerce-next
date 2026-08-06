@@ -1,72 +1,82 @@
 // components/ProductCard.tsx
 import { getCategoryName } from "@/lib/utils";
 import { Product } from "@/types/type";
-
+import Image from "next/image";
+import Link from "next/link";
 
 interface ProductCardProps {
   product: Product;
 }
 
+
 const ProductCard = ({ product }: ProductCardProps) => {
   const hasDiscount = Boolean(
     product.discount_percent && product.discount_percent > 0
   );
-
   const finalPrice = hasDiscount
     ? product.price - (product.price * product.discount_percent!) / 100
     : product.price;
+    
+      const mainImage = [...product.product_images]
+    .sort((a, b) => a.sort_order - b.sort_order)[0]?.url;
 
   return (
-    <div className="border group p-4 rounded-lg flex flex-col justify-between h-full bg-white transition-all ease-in-out hover:shadow-xl hover:border-transparent relative">
+    <Link href={`/products/${product.id}`}>
+    <div className="group relative flex h-full flex-col justify-between rounded-2xl border border-gray-100 bg-white p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-gray-200/60">
       {hasDiscount && (
-        <span className="absolute top-3 m-2 right-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-red-600/70 px-3 py-1 text-xs font-extrabold text-white shadow-lg shadow-red-900/20 backdrop-blur-md">
-          <img
-            src="/icons/kyungheehee-flame-21186_128.gif"
-            alt="Flame"
-            className="h-4 w-4 object-contain transition-transform duration-300 ease-out group-hover:scale-130 group-hover:-rotate-12"
-          />
-          <span className="drop-shadow-sm">{product.discount_percent}٪ تخفیف</span>
+        <span className="absolute top-3 right-3 z-10 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-red-500 to-orange-500 px-2.5 py-1 text-xs font-bold text-white shadow-md shadow-red-500/30">
+          <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="h-3.5 w-3.5 animate-pulse"
+          >
+            <path d="M12 2c1 3-1 4-1 6 0 1.5 1 2.5 2 2.5.8 0 1.5-.6 1.5-1.5 0-.5-.2-1-.5-1.3C15.5 9 17 11 17 13.5 17 18 14 21 12 21s-5-3-5-7.5C7 9.5 9.5 7 10 4c.3-1 .8-1.5 2-2z" />
+          </svg>
+          {product.discount_percent}٪
         </span>
       )}
 
       <div>
-        <div className="w-full aspect-[4/3] relative mb-4 overflow-hidden rounded-md bg-gray-100">
-          <img
-            src={product.image}
+        <div className="relative mb-4 aspect-square w-full overflow-hidden rounded-xl bg-gray-50">
+          <Image
+            unoptimized
+            fill
+            src={mainImage}
             alt={product.title}
-            className="absolute  transition-transform duration-300 ease-in-out group-hover:scale-105 inset-0 h-full w-full object-cover object-center"
+            className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
           />
         </div>
 
-        <h3 className="font-semibold text-lg mb-2 text-gray-800 line-clamp-1">
+        <h3 className="mb-1.5 line-clamp-1 text-base font-semibold text-gray-800">
           {product.title}
         </h3>
 
-        <div className="mt-2 space-y-1">
+        <div className="mt-1 flex items-baseline gap-2">
           {hasDiscount ? (
-            <div className="flex items-center gap-2">
-              <span className="text-lg font-bold text-emerald-600">
-                {finalPrice.toLocaleString("eng")} $
+            <div className="flex items-center gap-5">
+              <span className="text-lg font-extrabold text-emerald-600">
+                {finalPrice.toLocaleString("en-US")} $
               </span>
               <span className="text-sm text-gray-400 line-through">
-                {product.price.toLocaleString("eng")}
+                {product.price.toLocaleString("en-US")}
               </span>
             </div>
           ) : (
-            <span className="text-lg font-bold text-gray-700">
-              {product.price.toLocaleString("eng")} $
+            <span className="text-xl font-extrabold text-gray-800">
+              {product.price.toLocaleString("en-US")} $
             </span>
           )}
         </div>
       </div>
 
-      <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
-        <span>category :</span>
-        <span className="font-semibold text-blue-600">
+      <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-3 text-xs">
+        <span className="text-gray-400">category</span>
+        <span className="rounded-full bg-blue-50 px-2.5 py-1 font-semibold text-blue-600">
           {getCategoryName(product)}
         </span>
       </div>
     </div>
+    </Link>
   );
 };
 
