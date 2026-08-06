@@ -1,148 +1,71 @@
-'use client'
+'use client';
+
+import Link from "next/link";
 import { Carousel } from "@/components/main/carousel";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
 import SpecialProducts from "@/components/ui/special-products";
 import useFilteredProducts from "@/hooks/useFilteredProducts";
 import Loading from "@/components/ui/Loading";
 
-export default function Home() {
+import { Section } from "@/components/layout/section";
+import { HeroCard } from "@/components/ui/hero-card";
 
+export default function Home() {
   const { products, loading } = useFilteredProducts({ categoryId: 2 });
 
-  if (loading) {
-    return <Loading />
-  }
+  if (loading) return <Loading />;
+  if (!products || products.length === 0) return <p>No products found</p>;
 
-  if (!products || products.length === 0) {
-    return <p>No products found</p>;
-  }
+  const featured = products[0];
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-slate-50/50">
 
-      {/* Hero Section */}
-      <section className="container mx-auto px-6 py-16">
-        <div
-          className="
-          grid 
-          md:grid-cols-2 
-          gap-12 
-          items-center
-          "
-        >
-          {/* Text */}
+      {/* بخش Hero همراه با افکت نور پس‌زمینه (variant="glow") */}
+      <Section variant="glow">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+
           <div className="space-y-6 text-center md:text-left">
-
-            <span className="inline-block rounded-full bg-green-100 px-4 py-2 text-sm font-medium text-green-700">
-              New Collection
+            <span className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-700 border border-emerald-500/20">
+              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            new series 2026
             </span>
 
-            <h1 className="
-              text-4xl 
-              md:text-6xl 
-              font-bold 
-              tracking-tight 
-              text-gray-900
-            ">
-              Welcome to my Ecommerce
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
+              Welcome to my <span className=" bg-linear-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">Ecommerce</span>
             </h1>
-            <p className="
-              text-lg 
-              text-gray-600 
-              max-w-lg
-              mx-auto
-              md:mx-0
-            ">
-              Discover the latest products at the best prices.
-              Quality products with modern designs.
+
+            <p className="text-lg text-slate-600 max-w-lg mx-auto md:mx-0 leading-relaxed">
+              Discover the latest products at the best prices. Quality products with modern designs.
             </p>
+
             <Button
               render={<Link href="/products" />}
               variant="default"
-              className="
-                rounded-full
-                px-8
-                py-6
-                text-base
-              "
+              className="rounded-full px-8 py-6 text-base bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-600/25 transition-all hover:scale-105"
             >
               Browse All Products
             </Button>
           </div>
-          {/* Product Image */}
-          <div className="
-            relative
-            group
-            overflow-hidden
-            rounded-3xl
-            shadow-2xl
-            bg-white
-          ">
-            <Image
-              alt={products[0].title}
-              width={600}
-              height={600}
-              src={products[0].image}
-              className="
-                h-[450px]
-                w-full
-                object-cover
-                transition-transform
-                duration-700
-                group-hover:scale-110
-              "
-            />
-            <div className="
-              absolute
-              inset-0
-              bg-gradient-to-t
-              from-black/40
-              via-transparent
-              to-transparent
-            " />
-            <div
-              className="
-              absolute
-              bottom-6
-              right-6
-              text-white
-              "
-            >
-              <h3 className="
-                text-2xl
-                font-bold
-                drop-shadow-lg
-              ">
-                {products[0].title}
-              </h3>
 
-              <p className="
-                mt-2
-                text-xl
-                font-semibold
-              ">
-                ${products[0].price}
-              </p>
-            </div>
-          </div>
+          {/* کامپوننت کارت فوق‌العاده شیک */}
+          <HeroCard
+            title={featured.title}
+            price={featured.price}
+            image={featured.image}
+          />
+
         </div>
-      </section>
+      </Section>
 
-
-      {/* Carousel */}
-      <section className="
-        container 
-        mx-auto 
-        px-6 
-        pb-20
-      ">
+      <Section className="py-8 md:py-12 max-w-6xl mx-auto">
         <Carousel products={products} />
-      </section>
-      <div className=" bg-gray-200 m-4">
+      </Section>
+
+      <Section>
         <SpecialProducts />
-      </div>
+      </Section>
+
     </main>
   );
 }
