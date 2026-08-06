@@ -19,7 +19,7 @@ src="/icons/kyungheehee-flame-21186_128.gif"
         alt="Flame"
         width={24}
         height={24}
-        unoptimized
+        
         className="w-6 h-6 object-contain transition-transform duration-300 ease-out group-hover:scale-125 group-hover:-rotate-12"        />
       </div>
 

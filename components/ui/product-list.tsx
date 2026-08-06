@@ -29,7 +29,7 @@ export default function ProductList({ products }: ProductsListProps) {
 
   return (
     <div>
-      <div className="m-2 flex flex-col items-center justify-center gap-6 p-4 md:flex-row">
+      <div className="m-2 flex flex-col bg- items-center justify-center gap-6 p-4 md:flex-row">
         <h2 className="text-xl font-bold text-gray-800">Explore our Products</h2>
           <ProductSearch onSearch={setSearchTerm} />
       </div>

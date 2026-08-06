@@ -17,6 +17,9 @@ export default function Home() {
   if (!products || products.length === 0) return <p>No products found</p>;
 
   const featured = products[0];
+  
+const featuredImage = [...featured.product_images]
+  .sort((a, b) => a.sort_order - b.sort_order)[0]?.url;
 
   return (
     <main className="min-h-screen bg-slate-50/50">
@@ -52,7 +55,7 @@ export default function Home() {
           <HeroCard
             title={featured.title}
             price={featured.price}
-            image={featured.image}
+            image={featuredImage}
           />
 
         </div>
