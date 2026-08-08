@@ -1,6 +1,6 @@
 'use client';
 
-import ProductList from '@/components/ui/product-list';
+import ProductList from '@/components/ui/list/product-list';
 import UseAllProductsOptions from '@/hooks/useAllProducts.ts';
 
 

@@ -1,7 +1,7 @@
 "use client";
 import { Product } from "@/types/type";
 import { useMemo, useState } from "react";
-import ProductSearch from "./ProductSearch";
+import ProductSearch from "../ProductSearch";
 import { useDelayedFlag } from "@/hooks/useDelayedFlag";
 import { getCategoryName } from "@/lib/utils";
 import ProductGrid from "./product-grid";

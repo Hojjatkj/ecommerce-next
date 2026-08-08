@@ -1,6 +1,6 @@
 'use client';
 
-import ProductGrid from '@/components/ui/product-grid';
+import ProductGrid from '@/components/ui/list/product-grid';
 import useFilteredProducts from '@/hooks/useFilteredProducts';
 import Image from 'next/image';
 

@@ -1,7 +1,8 @@
 "use client";
 import { Product } from "@/types/type";
-import ProductCard from "./product-card";
+
 import { useDelayedFlag } from "@/hooks/useDelayedFlag";
+import ProductCard from "./product-card";
 
 export interface ProductGridProps {
   products: Product[];

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Carousel } from "@/components/main/carousel";
 import { Button } from "@/components/ui/button";
-import SpecialProducts from "@/components/ui/special-products";
+import SpecialProducts from "@/components/ui/list/special-products";
 import useFilteredProducts from "@/hooks/useFilteredProducts";
 import Loading from "@/components/ui/Loading";
 

@@ -1,5 +1,7 @@
 "use client"
 
+import { productToCartItem } from "@/lib/utils";
+import { useCartStore } from "@/store/cart-store";
 import { Product } from "@/types/type"
 import Image from "next/image";
 import { useState } from "react";
@@ -13,6 +15,8 @@ const ProductDetail = ({ product }: { product: Product }) => {
   const [selectedImage, setSelectedImage] = useState(
     sortedImages[0]?.url || ''
   );
+
+  const addItem = useCartStore((state) => state.addItem);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
@@ -56,6 +60,11 @@ const ProductDetail = ({ product }: { product: Product }) => {
           {product.price.toLocaleString()} تومان
         </p>
         <p className="text-gray-600 leading-relaxed">{product.description}</p>
+    
+
+<button onClick={() => addItem(productToCartItem(product))}>
+  افزودن به سبد
+</button>
       </div>
     </div>
   )
