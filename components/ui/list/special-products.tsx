@@ -11,16 +11,19 @@ export default function SpecialProducts() {
   if (loading) return <p className="p-4">در حال دریافت اطلاعات...</p>;
 
   return (
-    <div className="p-6 ">
-      <div className="flex flex-row">
-        <h2 className="text-xl font-bold mb-4">Special offers </h2>
-        <Image
-src="/icons/kyungheehee-flame-21186_128.gif"
-        alt="Flame"
-        width={24}
-        height={24}
-        
-        className="w-6 h-6 object-contain transition-transform duration-300 ease-out group-hover:scale-125 group-hover:-rotate-12"        />
+    <div >
+      <div className="flex flex-row p-4 gap-2 justify-baseline items-center">
+        <h2 className="text-xl font-bold ">Special offers </h2>
+        <video
+          src="/icons/Fire.webm"
+          width={30}
+          height={30}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="mb-4 animate-bounce"
+        />
       </div>
 
       <ProductGrid products={products} />
