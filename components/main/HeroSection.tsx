@@ -1,9 +1,24 @@
+'use client';
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/layout/section";
 import { HeroCard } from "@/components/ui/hero-card";
-import { Carousel } from "@/components/main/carousel";
 import { Product } from "@/types/type";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+
+const Carousel = dynamic(
+  ()=>import("@/components/main/carousel").then((mod)=> mod.Carousel),
+  {
+    ssr:false,
+    loading:()=>(
+      <div className="h-64 w-full animate-pulse bg-slate-200/60 rounded-2xl flex items-center justify-center text-slate-400">
+        در حال بارگذاری اسلایدر...
+
+      </div>
+    )
+  }
+)
 
 interface HeroSectionProps {
   products: Product[];
@@ -54,7 +69,7 @@ export default function HeroSection({ products }: HeroSectionProps) {
       </Section>
 
       {/* بخش کاروسل محصولات */}
-      <Section className="py-8 md:py-12 max-w-6xl mx-auto">
+      <Section className="bg-[#009966] w-full mx-auto">
         <Carousel products={products} />
       </Section>
     </>

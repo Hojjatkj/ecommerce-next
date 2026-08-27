@@ -20,7 +20,8 @@ export const Carousel = ({ products }: CarouselProps) => {
 
 
   return (
-    <Card className="overflow-hidden bg-white max-w-4xl mx-auto shadow-lg rounded-2xl border border-gray-100">
+    <Card className="overflow-hidden h-full mx-auto shadow-lg rounded-2xl border border-gray-100">
+      
       <Swiper
         modules={[Autoplay, Navigation, Pagination]}
         spaceBetween={0}
@@ -45,7 +46,7 @@ export const Carousel = ({ products }: CarouselProps) => {
         در سایز کوچک: flex-col (عکس بالا، متن و قیمت پایین)
         در سایز md به بالا: flex-row-reverse (عکس سمت چپ/راست و متن کنارش)
       */}
-      <div className="flex flex-col md:flex-row-reverse w-full p-3 h-auto md:h-96" dir="rtl">
+      <div className="flex flex-col md:flex-row-reverse w-full p-3 h-auto md:h-120 " dir="rtl">
         
         {/* بخش تصویر: در دسکتاپ فقط نیمی از عرض را می‌گیرد تا زشت و بزرگ نشود */}
         <div className="relative w-full md:w-2/3 h-64 md:h-full rounded-2xl bg-transparent overflow-hidden group shrink-0">
@@ -62,7 +63,7 @@ export const Carousel = ({ products }: CarouselProps) => {
         </div>
 
         {/* بخش محتوا (عنوان، توضیحات و قیمت): در دسکتاپ کنار عکس قرار می‌گیرد */}
-        <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between bg-white">
+        <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between ">
           <div className="space-y-3">
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 line-clamp-2">
               {product.title}

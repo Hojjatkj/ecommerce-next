@@ -19,10 +19,9 @@ export default async function Home() {
   const products = (data ?? []) as unknown as Product[];
 
   return (
-    <main className="min-h-screen bg-slate-50/50">
+    <main className="min-h-screen ">
       {/* ایمپورت سکشن جدا شده */}
-      <HeroSection products={products} />
-
+        <HeroSection products={products} />
       <Section>
         <SpecialProducts />
       </Section>
