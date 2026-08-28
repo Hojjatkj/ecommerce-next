@@ -5,20 +5,18 @@ import { Section } from "@/components/layout/section";
 import { HeroCard } from "@/components/ui/hero-card";
 import { Product } from "@/types/type";
 import dynamic from "next/dynamic";
-import Image from "next/image";
 
 const Carousel = dynamic(
-  ()=>import("@/components/main/carousel").then((mod)=> mod.Carousel),
+  () => import("@/components/main/carousel").then((mod) => mod.Carousel),
   {
-    ssr:false,
-    loading:()=>(
-      <div className="h-64 w-full animate-pulse bg-slate-200/60 rounded-2xl flex items-center justify-center text-slate-400">
+    ssr: false,
+    loading: () => (
+      <div className="h-64 w-full animate-pulse bg-[var(--color-muted-bg)] rounded-2xl flex items-center justify-center text-[var(--color-muted-text)] font-medium">
         در حال بارگذاری اسلایدر...
-
       </div>
     )
   }
-)
+);
 
 interface HeroSectionProps {
   products: Product[];
@@ -32,29 +30,28 @@ export default function HeroSection({ products }: HeroSectionProps) {
 
   return (
     <>
-      {/* بخش Hero همراه با کارت محصول ویژه */}
       <Section variant="glow">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6 text-center md:text-left">
-            <span className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-700 border border-emerald-500/20">
-              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              new series 2026
+        <div className="grid md:grid-cols-2 gap-12 items-center dir-rtl">
+          <div className="space-y-6 text-right">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[var(--color-brand-primary)]/10 px-4 py-1.5 text-xs font-semibold text-[var(--color-brand-primary)] border border-[var(--color-brand-primary)]/20">
+              <span className="h-2 w-2 rounded-full bg-[var(--color-brand-primary)] animate-pulse" />
+              سری جدید ۲۰۲۶
             </span>
 
-            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
-              Welcome to my <span className="bg-linear-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">Ecommerce</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-[var(--color-text-main)] leading-tight">
+              به فروشگاه اینترنتی من <span className="bg-gradient-to-r from-[var(--color-brand-primary)] to-teal-500 bg-clip-text text-transparent">خوش آمدید</span>
             </h1>
 
-            <p className="text-lg text-slate-600 max-w-lg mx-auto md:mx-0 leading-relaxed">
-              Discover the latest products at the best prices. Quality products with modern designs.
+            <p className="text-lg text-[var(--color-muted-text)] max-w-lg leading-relaxed">
+              جدیدترین محصولات را با بهترین قیمت‌ها کشف کنید. محصولات باکیفیت با طراحی مدرن.
             </p>
 
             <Button
               render={<Link href="/products" />}
               variant="default"
-              className="rounded-full px-8 py-6 text-base bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-600/25 transition-all hover:scale-105"
+              className="rounded-full px-8 py-6 text-base bg-[var(--color-brand-primary)] hover:bg-[var(--color-brand-primary-hover)] text-[var(--color-brand-primary-fg)] shadow-lg shadow-[var(--color-brand-primary)]/20 transition-all hover:scale-105"
             >
-              Browse All Products
+              مشاهده همه محصولات
             </Button>
           </div>
 
@@ -68,8 +65,7 @@ export default function HeroSection({ products }: HeroSectionProps) {
         </div>
       </Section>
 
-      {/* بخش کاروسل محصولات */}
-      <Section className="bg-[#009966] w-full mx-auto">
+      <Section className="bg-[var(--color-banner)] w-full mx-auto">
         <Carousel products={products} />
       </Section>
     </>

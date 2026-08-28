@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { Product, ProductContextType } from '@/types/type';
 import { supabase } from '@/lib/supabase';
 import { PRODUCT_SELECT_QUERY } from '@/lib/queries';
@@ -15,7 +15,7 @@ export function ProductProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     async function fetchProducts() {
-      const { data, error:fetchError } = await supabase
+      const { data, error: fetchError } = await supabase
         .from('products')
         .select(PRODUCT_SELECT_QUERY)
         .order('id', { ascending: false });
@@ -32,8 +32,12 @@ export function ProductProvider({ children }: { children: React.ReactNode }) {
     fetchProducts();
   }, []);
 
+  const value = useMemo(
+    () => ({ products, loading, error }),
+    [products, loading, error]
+  )
   return (
-    <ProductContext.Provider value={{ products, loading, error }}>
+    <ProductContext.Provider value={value}>
       {children}
     </ProductContext.Provider>
   );

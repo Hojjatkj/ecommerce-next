@@ -14,52 +14,49 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { hasDiscount, finalPrice } = CalculateDiscount(
-    {
-      price: product.price,
-      discountPercent: product.discount_percent
-    }
-  )
-
-  const mainImage = [...product.product_images]
-    .sort((a, b) => a.sort_order - b.sort_order)[0]?.url;
-
-  // const addItem = useCartStore((state) => state.addItem);
-  // const removeItem = useCartStore((state) => state.removeItem);
-  // const items = useCartStore((state) => state.items);
-  // const cartItem = items.find((i) => i.id === String(product.id));
-  // const quantityInCart = cartItem?.quantity ?? 0;
+  const { hasDiscount, finalPrice } = CalculateDiscount({
+    price: product.price,
+    discountPercent: product.discount_percent,
+  });
 
   return (
-    <Link href={`/products/${product.id}`}>
-      <div className="group relative flex h-full flex-col justify-between rounded-2xl border border-gray-100 bg-white p-4 shadow-sm transition-all duration-150 ease-out hover:-translate-y-0.5 hover:border-emerald-100 hover:shadow-md">
-        {hasDiscount && (<DiscountBadge percent={product.discount_percent} />)}
+    <Link href={`/products/${product.id}`} className="block h-full">
+      <div className="group relative flex h-full flex-col justify-between rounded-2xl border border-[var(--color-border-main)] bg-[var(--color-card-bg)] p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[var(--color-brand-primary)]/40 hover:shadow-xl hover:shadow-[var(--color-brand-primary)]/10 dir-rtl">
+        {hasDiscount && <DiscountBadge percent={product.discount_percent} />}
+        
         <div>
           <ProductImage product={product} />
-          <h3 className="mb-1.5 line-clamp-1 text-base font-semibold text-gray-800">
+          
+          <h3 className="mb-2 line-clamp-1 text-base font-bold text-[var(--color-text-main)] group-hover:text-[var(--color-brand-primary)] transition-colors">
             {product.title}
           </h3>
 
-          <div className="mt-1 flex items-baseline gap-2">
+          <div className="mt-2 flex items-center justify-between">
             {hasDiscount ? (
-              <div className="flex items-center gap-5">
-                <span className="text-lg font-extrabold text-emerald-600">
-                  {finalPrice.toLocaleString("en-US")} $
+              <div className="flex items-center gap-2">
+                {/* قیمت اصلی تخفیف‌خورده با سبززمردی که با بنفش خفن میشه */}
+                <span className="text-lg font-black text-emerald-500 dark:text-emerald-400">
+                  {finalPrice.toLocaleString("fa-IR")}
+                  <span className="text-xs font-semibold mr-0.5">تومان</span>
                 </span>
-                <span className="text-sm text-gray-400 line-through">
-                  {product.price.toLocaleString("en-US")}
+                <span className="text-xs text-[var(--color-muted-text)] line-through opacity-70">
+                  {product.price.toLocaleString("fa-IR")}
                 </span>
               </div>
             ) : (
-              <span className="text-xl font-extrabold text-gray-800">
-                {product.price.toLocaleString("en-US")} $
+              <span className="text-lg font-black text-[var(--color-text-main)]">
+                {product.price.toLocaleString("fa-IR")}
+                <span className="text-xs font-semibold mr-0.5">تومان</span>
               </span>
             )}
           </div>
         </div>
-        <SubProductCard product={product} />
+
+        <div className="mt-4 pt-3 border-t border-[var(--color-border-main)]">
+          <SubProductCard product={product} />
+        </div>
       </div>
-    </Link >
+    </Link>
   );
 };
 

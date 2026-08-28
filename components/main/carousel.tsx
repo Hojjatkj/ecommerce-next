@@ -10,7 +10,6 @@ import "swiper/css/pagination";
 import { Product } from "@/types/type";
 import Image from "next/image";
 
-
 interface CarouselProps {
   products: Product[];
 }
@@ -18,10 +17,8 @@ interface CarouselProps {
 export const Carousel = ({ products }: CarouselProps) => {
   if (!products || products.length === 0) return null;
 
-
   return (
-    <Card className="overflow-hidden h-full mx-auto shadow-lg rounded-2xl border border-gray-100">
-      
+    <Card className="overflow-hidden h-full mx-auto shadow-2xl rounded-3xl border-0 bg-[var(--color-card-bg)]">
       <Swiper
         modules={[Autoplay, Navigation, Pagination]}
         spaceBetween={0}
@@ -34,64 +31,58 @@ export const Carousel = ({ products }: CarouselProps) => {
         }}
         className="w-full relative"
       >
-        
-{products.map((product, index) => {
-  const mainImage = [...product.product_images]
-    .sort((a, b) => a.sort_order - b.sort_order)[0]?.url;
+        {products.map((product, index) => {
+          const mainImage = [...product.product_images]
+            .sort((a, b) => a.sort_order - b.sort_order)[0]?.url;
 
-  return (
-    <SwiperSlide key={product.id}>
-      {/* 
-        تغییر اصلی: 
-        در سایز کوچک: flex-col (عکس بالا، متن و قیمت پایین)
-        در سایز md به بالا: flex-row-reverse (عکس سمت چپ/راست و متن کنارش)
-      */}
-      <div className="flex flex-col md:flex-row-reverse w-full p-3 h-auto md:h-120 " dir="rtl">
-        
-        {/* بخش تصویر: در دسکتاپ فقط نیمی از عرض را می‌گیرد تا زشت و بزرگ نشود */}
-        <div className="relative w-full md:w-2/3 h-64 md:h-full rounded-2xl bg-transparent overflow-hidden group shrink-0">
-          {mainImage && (
-            <Image
-              src={mainImage}
-              alt={product.title}
-              fill
-              unoptimized
-              className="object-cover transition-transform duration-500 group-hover:scale-105 rounded-2xl"
-              loading={index === 0 ? "eager" : "lazy"}
-            />
-          )}
-        </div>
+          return (
+            <SwiperSlide key={product.id}>
+              <div className="flex flex-col md:flex-row-reverse w-full p-4 md:p-6 h-auto md:h-112 items-center gap-6" dir="rtl">
+                
+                {/* بخش تصویر */}
+                <div className="relative w-full md:w-1/2 h-64 md:h-full rounded-2xl overflow-hidden group shrink-0 bg-slate-100 dark:bg-slate-800">
+                  {mainImage && (
+                    <Image
+                      src={mainImage}
+                      alt={product.title}
+                      fill
+                      unoptimized
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 rounded-2xl"
+                      loading={index === 0 ? "eager" : "lazy"}
+                    />
+                  )}
+                </div>
 
-        {/* بخش محتوا (عنوان، توضیحات و قیمت): در دسکتاپ کنار عکس قرار می‌گیرد */}
-        <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between ">
-          <div className="space-y-3">
-            <h2 className="text-xl md:text-2xl font-bold text-gray-800 line-clamp-2">
-              {product.title}
-            </h2>
-            <p className="text-gray-500 text-sm leading-relaxed line-clamp-3 md:line-clamp-4">
-              {product.description}
-            </p>
-          </div>
+                {/* بخش محتوا */}
+                <div className="w-full md:w-1/2 flex flex-col justify-between h-full py-2">
+                  <div className="space-y-4">
+                    <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-[var(--color-brand-primary)]/10 text-[var(--color-brand-primary)]">
+                      پیشنهاد ویژه
+                    </span>
+                    <h2 className="text-xl md:text-3xl font-extrabold text-[var(--color-text-main)] line-clamp-2 leading-tight">
+                      {product.title}
+                    </h2>
+                    <p className="text-[var(--color-muted-text)] text-sm md:text-base leading-relaxed line-clamp-3">
+                      {product.description}
+                    </p>
+                  </div>
 
-          {/* بخش قیمت که همیشه در پایین ترین قسمت باکس متن می‌ماند */}
-          <div className="pt-4 mt-4 border-t border-gray-100 flex items-center justify-between">
-            <span className="text-gray-400 text-xs md:text-sm">قیمت:</span>
-            <div className="flex items-center gap-1">
-              <span className="text-2xl font-black text-green-600">
-                <span className="text-lg font-bold text-green-700 ml-1">$</span>
-                {product.price?.toLocaleString("en-US", {
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 2,
-                })}
-              </span>
-            </div>
-          </div>
-        </div>
+                  {/* قیمت */}
+                  <div className="pt-4 mt-6 border-t border-[var(--color-border-main)] flex items-center justify-between">
+                    <span className="text-[var(--color-muted-text)] text-xs md:text-sm font-medium">قیمت محصول:</span>
+                    <div className="flex items-center gap-1">
+                      <span className="text-2xl font-black text-[var(--color-brand-primary)]">
+                        {product.price?.toLocaleString("fa-IR")}
+                        <span className="text-sm font-bold ml-1"> تومان</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
 
-      </div>
-    </SwiperSlide>
-  );
-})}
+              </div>
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </Card>
   );
