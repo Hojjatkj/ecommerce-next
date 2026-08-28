@@ -1,12 +1,12 @@
 'use client';
 
 import ProductList from '@/components/ui/list/product-list';
-import UseAllProductsOptions from '@/hooks/useAllProducts.ts';
+import useFilteredProducts from '@/hooks/useFilteredProducts';
 
 
 
 export default function ProductsPage() {
-    const { products } = UseAllProductsOptions ();
+    const { products } = useFilteredProducts ();
 
     return (
         <div className="p-6 bg-gray-50" >
