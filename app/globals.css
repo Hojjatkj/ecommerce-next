@@ -1,50 +1,7 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    /* تم لایت (Light Mode) */
-    --background: #fdfbfd;
-    --foreground: #1c102b;
-    
-    --card: #ffffff;
-    --card-foreground: #1c102b;
-    
-    --muted: #f3eef8;
-    --muted-foreground: #6b5c7e;
-    
-    /* بنفش اصلی شما + رنگ مکمل اکسترا */
-    --primary: #490596;
-    --primary-hover: #370373;
-    --primary-foreground: #ffffff;
-    --accent: #f59e0b; /* رنگ کهربایی/طلایی برای پیشنهادهای ویژه و اکشن‌ها */
-
-    --accent-section: #f3eef8;
-    --border-color: #e9dfef;
-  }
-
-  .dark {
-    /* تم دارک (Dark Mode) - بسیار لوکس و شیک */
-    --background: #0d0614;
-    --foreground: #f5effc;
-    
-    --card: #160c23;
-    --card-foreground: #f5effc;
-    
-    --muted: #241437;
-    --muted-foreground: #a693bd;
-    
-    /* بنفش روشن‌تر در دارک مود برای دید بهتر */
-    --primary: #7c3aed;
-    --primary-hover: #6d28d9;
-    --primary-foreground: #ffffff;
-    --accent: #fbbf24;
-
-    --accent-section: #1b0c2e;
-    --border-color: #2b1744;
-  }
-}
-
-:root {
+@theme {
+  /* تعریف متغیرها برای استفاده مستقیم در Tailwind v4 */
   --color-bg-main: var(--background);
   --color-text-main: var(--foreground);
   --color-card-bg: var(--card);
@@ -57,4 +14,46 @@
   --color-brand-accent: var(--accent);
   --color-banner: var(--accent-section);
   --color-border-main: var(--border-color);
+}
+
+@layer base {
+  :root {
+    /* تم لایت (Light Mode) */
+    --background: #fdfbfd;
+    --foreground: #1c102b;
+    
+    --card: #ffffff;
+    --card-foreground: #1c102b;
+    
+    --muted: #f3eef8;
+    --muted-foreground: #6b5c7e;
+    
+    --primary: #490596;
+    --primary-hover: #370373;
+    --primary-foreground: #ffffff;
+    --accent: #f59e0b;
+
+    --accent-section: #f3eef8;
+    --border-color: #e9dfef;
+  }
+
+  .dark {
+    /* تم دارک (Dark Mode) */
+    --background: #0d0614;
+    --foreground: #f5effc;
+    
+    --card: #160c23;
+    --card-foreground: #f5effc;
+    
+    --muted: #241437;
+    --muted-foreground: #a693bd;
+    
+    --primary: #7c3aed;
+    --primary-hover: #6d28d9;
+    --primary-foreground: #ffffff;
+    --accent: #fbbf24;
+
+    --accent-section: #1b0c2e;
+    --border-color: #2b1744;
+  }
 }

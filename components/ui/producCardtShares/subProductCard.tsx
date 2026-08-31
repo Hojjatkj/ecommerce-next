@@ -11,9 +11,9 @@ const SubProductCard = ({ product }: { product: Product }) => {
       const quantityInCart = cartItem?.quantity ?? 0;
 
     return (
-        <div className="mt-4 flex flex-col gap-3 border-t-2 border-gray-100 pt-3">
+        <div className="mt-3 flex flex-col gap-3  border-gray-100 pt-3">
           <div className="flex items-center justify-between text-xs">
-            <span className="text-gray-400">category</span>
+            <span className="text-gray-400">دسته بندی ها</span>
             <span className="rounded-full bg-blue-50 px-2.5 py-1 font-semibold text-blue-600">
               {getCategoryName(product)}
             </span>

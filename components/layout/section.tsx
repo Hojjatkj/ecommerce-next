@@ -9,7 +9,7 @@ export function Section({ children, className, variant = "default", ...props }: 
   return (
     <section
       className={cn(
-        "relative overflow-hidden py-16 md:py-24 transition-colors",
+        "relative overflow-hidden py-16 md:py-24  transition-colors",
         variant === "muted" && "bg-gray-100/60",
         className
       )}
@@ -22,7 +22,7 @@ export function Section({ children, className, variant = "default", ...props }: 
         </div>
       )}
 
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 ">
         {children}
       </div>
     </section>

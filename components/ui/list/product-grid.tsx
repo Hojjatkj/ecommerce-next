@@ -3,6 +3,8 @@ import { Product } from "@/types/type";
 import { useDelayedFlag } from "@/hooks/useDelayedFlag";
 import ProductCard from "./product-card";
 
+
+
 export interface ProductGridProps {
   products: Product[];
 }

@@ -9,6 +9,7 @@ import { DiscountBadge } from "../producCardtShares/discount-badge";
 import ProductImage from "../producCardtShares/productImage";
 import SubProductCard from "../producCardtShares/subProductCard";
 
+
 interface ProductCardProps {
   product: Product;
 }
@@ -23,7 +24,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     <Link href={`/products/${product.id}`} className="block h-full">
       <div className="group relative flex h-full flex-col justify-between rounded-2xl border border-[var(--color-border-main)] bg-[var(--color-card-bg)] p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[var(--color-brand-primary)]/40 hover:shadow-xl hover:shadow-[var(--color-brand-primary)]/10 dir-rtl">
         {hasDiscount && <DiscountBadge percent={product.discount_percent} />}
-        
+
         <div>
           <ProductImage product={product} />
           

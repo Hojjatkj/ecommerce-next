@@ -12,12 +12,12 @@ export default function ProductDetailPage() {
   const { products, loading } = useProduct(id);
   const product = products[0];
 
-  if (loading) return <div><Image src={"/icons/Search (1).svg"} alt="loading..." fill/></div>;
-  if (!product) return <div>محصول پیدا نشد</div>;
+  if (loading) return <div><Image src={"/icons/Search (1).svg"} alt="loading..." fill /></div>;
+  if (!product) return <div className="m-8">محصول پیدا نشد</div>;
 
   return (
     <div>
- <ProductDetail product={product}/>
+      <ProductDetail product={product} />
     </div>
   );
 }
