@@ -7,7 +7,7 @@ interface ProductSearchptops {
     placeholder?: string
 }
 
-export default function ProductSearch({ onSearch, placeholder = " Search for products..." }: ProductSearchptops) {
+export default function ProductSearch({ onSearch, placeholder = "جستجوی محصولات " }: ProductSearchptops) {
     const [query, setQuery] = useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

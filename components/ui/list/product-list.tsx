@@ -1,23 +1,54 @@
 "use client";
-import { Product } from "@/types/type";
-import { useMemo, useState } from "react";
+import { Product, ProductsListProps } from "@/types/type";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import ProductSearch from "../ProductSearch";
 import ProductFilters, { SortOption } from "../ProductFilters";
 import { useDelayedFlag } from "@/hooks/useDelayedFlag";
 import { getCategoryName } from "@/lib/utils";
 import ProductGrid from "./product-grid";
+import Pagination from "./Pagination";
 import Image from "next/image";
 
-export interface ProductsListProps {
-  products: Product[];
-}
+const PAGE_SIZE = 20;
+
+
 
 export default function ProductList({ products }: ProductsListProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState<SortOption>("newest");
+
+  const currentPage = Math.max(1, Number(searchParams.get("page")) || 1);
+
   const isLoading = products.length === 0;
   const showEmptyMessage = useDelayedFlag(isLoading, 3000);
+
+  /**
+   * تغییر صفحه فعلی با به‌روزرسانی پارامتر `page` در URL
+   * مثال: /products?page=3
+   */
+  const setPage = (page: number) => {
+    // ۱. کپی از پارامترهای فعلی URL تا فیلترها/سرچ از بین نرن
+    const params = new URLSearchParams(searchParams.toString());
+
+    // ۲. صفحه ۱ نیازی به پارامتر نداره — حذفش می‌کنیم تا URL تمیز بمونه
+    if (page <= 1) {
+      params.delete("page");
+    } else {
+      params.set("page", String(page));
+    }
+
+    // ۳. رفتن به آدرس جدید (بدون اسکرول به بالای صفحه)
+    //    اگه پارامتری نمونده، ? اضافه نمی‌شه
+    router.push(`${pathname}${params.toString() ? `?${params}` : ""}`, {
+      scroll: false,
+    });
+  };
 
   const categories = useMemo(() => {
     const names = new Set<string>();
@@ -70,6 +101,29 @@ export default function ProductList({ products }: ProductsListProps) {
     return sorted;
   }, [products, searchTerm, selectedCategory, sortBy]);
 
+  const totalPages = Math.max(1, Math.ceil(filteredProducts.length / PAGE_SIZE));
+
+  // هر بار فیلتر/سرچ/سورت عوض بشه، برگرد به صفحه‌ی اول
+  useEffect(() => {
+    if (currentPage !== 1) {
+      setPage(1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm, selectedCategory, sortBy]);
+
+  // اگه صفحه‌ی فعلی از تعداد کل صفحات بیشتر شد (مثلاً بعد فیلتر شدید)، برگرد به آخرین صفحه‌ی معتبر
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setPage(totalPages);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalPages]);
+
+  const paginatedProducts = useMemo(() => {
+    const start = (currentPage - 1) * PAGE_SIZE;
+    return filteredProducts.slice(start, start + PAGE_SIZE);
+  }, [filteredProducts, currentPage]);
+
   return (
     <div>
      <div className="flex flex-col md:flex-row items-center justify-center gap-4 p-2">
@@ -81,7 +135,7 @@ export default function ProductList({ products }: ProductsListProps) {
               alt="پس‌زمینه"
               width={200}
               height={200}
-              className="w-48 h-48 object-contain"
+              className="w-48 h-48 object-contain opacity-80"
             />
 
             {/* متن دقیقاً در مرکز تصویر قرار می‌گیرد */}
@@ -105,7 +159,7 @@ export default function ProductList({ products }: ProductsListProps) {
       {isLoading ? (
         showEmptyMessage ? (
           <p className="py-10 text-center text-gray-500">
-            there is no any product ...
+            اینجا هیچ محصولی نیست....
           </p>
         ) : (
           <ProductGrid products={[]} />
@@ -118,11 +172,18 @@ export default function ProductList({ products }: ProductsListProps) {
             className="w-24 animate-float opacity-80 md:w-32"
           />
           <p className="mt-4 text-center text-lg text-gray-500 md:text-xl">
-            No products were found with these characteristics.
+            محصولی با این خصوصیات یافت نشد
           </p>
         </div>
       ) : (
-        <ProductGrid products={filteredProducts} />
+        <>
+          <ProductGrid products={paginatedProducts} />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setPage}
+          />
+        </>
       )}
     </div>
   );

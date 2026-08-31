@@ -33,3 +33,7 @@ interface ProductContextType {
   loading: boolean;
   error: string | null;
 }
+
+export interface ProductsListProps {
+  products: Product[];
+}
