@@ -9,6 +9,7 @@ import { getCategoryName } from "@/lib/utils";
 import ProductGrid from "./product-grid";
 import Pagination from "./Pagination";
 import Image from "next/image";
+import Breadcrumb from "./Breadcrumb";
 
 const PAGE_SIZE = 20;
 
@@ -18,36 +19,41 @@ export default function ProductList({ products }: ProductsListProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [sortBy, setSortBy] = useState<SortOption>("newest");
-
-  const currentPage = Math.max(1, Number(searchParams.get("page")) || 1);
-
   const isLoading = products.length === 0;
   const showEmptyMessage = useDelayedFlag(isLoading, 3000);
-
+  const currentPage = Math.max(1, Number(searchParams.get("page")) || 1);
+  const [searchTerm, setSearchTerm] = useState(searchParams.get("q") ?? "");
+  const [selectedCategory, setSelectedCategory] = useState(
+    searchParams.get("category") ?? "all"
+  );
+  const [sortBy, setSortBy] = useState<SortOption>(
+    (searchParams.get("sort") as SortOption) ?? "newest"
+  );
+  const [priceRange, setPriceRange] = useState<[number, number] | null>(() => {
+    const min = searchParams.get("minPrice");
+    const max = searchParams.get("maxPrice");
+    return min && max ? [Number(min), Number(max)] : null;
+  });
   /**
    * تغییر صفحه فعلی با به‌روزرسانی پارامتر `page` در URL
    * مثال: /products?page=3
    */
-  const setPage = (page: number) => {
-    // ۱. کپی از پارامترهای فعلی URL تا فیلترها/سرچ از بین نرن
+  const updateParams = (updates: Record<string, string | null>) => {
     const params = new URLSearchParams(searchParams.toString());
-
-    // ۲. صفحه ۱ نیازی به پارامتر نداره — حذفش می‌کنیم تا URL تمیز بمونه
-    if (page <= 1) {
-      params.delete("page");
-    } else {
-      params.set("page", String(page));
-    }
-
-    // ۳. رفتن به آدرس جدید (بدون اسکرول به بالای صفحه)
-    //    اگه پارامتری نمونده، ? اضافه نمی‌شه
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value === null || value === "") {
+        params.delete(key);
+      } else {
+        params.set(key, value);
+      }
+    });
     router.push(`${pathname}${params.toString() ? `?${params}` : ""}`, {
       scroll: false,
     });
+  };
+
+  const setPage = (page: number) => {
+    updateParams({ page: page <= 1 ? null : String(page) });
   };
 
   const categories = useMemo(() => {
@@ -71,7 +77,9 @@ export default function ProductList({ products }: ProductsListProps) {
       const matchesCategory =
         selectedCategory === "all" || getCategoryName(p) === selectedCategory;
 
-      return matchesSearch && matchesCategory;
+      const matchedPrice = !priceRange || (p.price >= priceRange[0] && p.price <= priceRange[1])
+
+      return matchesSearch && matchesCategory && matchedPrice;
     });
 
     const finalPrice = (p: Product) =>
@@ -99,9 +107,15 @@ export default function ProductList({ products }: ProductsListProps) {
     }
 
     return sorted;
-  }, [products, searchTerm, selectedCategory, sortBy]);
+  }, [products, searchTerm, selectedCategory, sortBy, priceRange]);
 
   const totalPages = Math.max(1, Math.ceil(filteredProducts.length / PAGE_SIZE));
+
+  const priceBounds = useMemo(() => {
+    if (products.length === 0) return { min: 0, max: 1000000 };
+    const prices = products.map((p) => p.price);
+    return { min: Math.min(...prices), max: Math.max(...prices) }
+  }, [products])
 
   // هر بار فیلتر/سرچ/سورت عوض بشه، برگرد به صفحه‌ی اول
   useEffect(() => {
@@ -126,26 +140,37 @@ export default function ProductList({ products }: ProductsListProps) {
 
   return (
     <div>
-     <div className="flex flex-col md:flex-row items-center justify-center gap-4 p-2">
-        <div className=" flex flex-col bg- items-center justify-center  md:flex-row">
-          <div className="relative w-fit items-center justify-center hidden  md:flex">
-            {/* تصویر در لایه زیرین */}
+      <div className="m-2">
+        <Breadcrumb
+          items={[
+            { label: "خانه", href: "/" },
+            { label: "محصولات", href: selectedCategory !== "all" ? "/products" : undefined },
+            ...(selectedCategory !== "all" ? [{ label: selectedCategory }] : []),
+          ]}
+        />
+      </div>
+
+      {/* بخش سرچ و فیلتر اصلاح‌شده */}
+      <div className="flex flex-col md:flex-row items-center justify-around gap-2 p-2">
+        <div className="flex items-center gap-3 w-full md:w-auto">
+          {/* تصویر پس‌زمینه/آیکون با ارتفاع کنترل‌شده */}
+          <div className="relative hidden items-center justify-center md:flex shrink-0">
             <Image
               src={"/icons/G7a3R1IzOO.svg"}
               alt="پس‌زمینه"
-              width={200}
-              height={200}
-              className="w-48 h-48 object-contain opacity-80"
+              width={120}
+              height={48}
+              className="w-32 h-18 object-contain opacity-80"
             />
-
-            {/* متن دقیقاً در مرکز تصویر قرار می‌گیرد */}
-            <h2 className="absolute text-lg font-bold text-gray-800 z-10 pointer-events-none">
+            <h2 className="absolute text-sm font-bold text-gray-800 z-10 pointer-events-none whitespace-nowrap">
               جستجو در محصولات
             </h2>
           </div>
-          <ProductSearch onSearch={setSearchTerm} />
+          
+          <div className="w-full md:w-auto">
+            <ProductSearch onSearch={setSearchTerm} />
+          </div>
         </div>
-
 
         <ProductFilters
           categories={categories}
@@ -153,9 +178,13 @@ export default function ProductList({ products }: ProductsListProps) {
           onCategoryChange={setSelectedCategory}
           sortBy={sortBy}
           onSortChange={setSortBy}
+          priceRange={priceRange}
+          priceBounds={priceBounds}
+          onPriceChange={setPriceRange}
         />
       </div>
 
+      {/* ادامه بخش نمایش لیست محصولات بدون تغییر */}
       {isLoading ? (
         showEmptyMessage ? (
           <p className="py-10 text-center text-gray-500">
@@ -177,6 +206,14 @@ export default function ProductList({ products }: ProductsListProps) {
         </div>
       ) : (
         <>
+          <p className="px-2 text-sm text-muted-text md:px-0 m-2">
+            نمایش{" "}
+            {((currentPage - 1) * PAGE_SIZE + 1).toLocaleString("fa-IR")} تا{" "}
+            {Math.min(currentPage * PAGE_SIZE, filteredProducts.length).toLocaleString(
+              "fa-IR"
+            )}{" "}
+            از {filteredProducts.length.toLocaleString("fa-IR")} محصول
+          </p>
           <ProductGrid products={paginatedProducts} />
           <Pagination
             currentPage={currentPage}

@@ -1,5 +1,6 @@
 'use client';
 
+import { Slider } from "@/components/ui/slider";
 import { useEffect, useRef, useState } from 'react';
 
 export type SortOption = 'newest' | 'price-asc' | 'price-desc' | 'discount';
@@ -10,6 +11,9 @@ interface ProductFiltersProps {
   onCategoryChange: (category: string) => void;
   sortBy: SortOption;
   onSortChange: (sort: SortOption) => void;
+  priceRange: [number, number] | null;
+  priceBounds: { min: number; max: number };
+  onPriceChange: (range: [number, number] | null) => void;
 }
 
 const SORT_LABELS: Record<SortOption, string> = {
@@ -27,6 +31,9 @@ export default function ProductFilters({
   onCategoryChange,
   sortBy,
   onSortChange,
+  priceRange,
+  priceBounds,
+  onPriceChange,
 }: ProductFiltersProps) {
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -44,10 +51,9 @@ export default function ProductFilters({
   }, [open]);
 
   const itemClass = (active: boolean) =>
-    `block w-full rounded-lg px-3 py-2 text-right text-sm transition-colors ${
-      active
-        ? 'bg-brand-primary/10 font-medium text-brand-primary'
-        : 'text-text-main hover:bg-muted-bg'
+    `block w-full rounded-lg px-3 py-2 text-right text-sm transition-colors ${active
+      ? 'bg-brand-primary/10 font-medium text-brand-primary'
+      : 'text-text-main hover:bg-muted-bg'
     }`;
 
   return (
@@ -70,7 +76,7 @@ export default function ProductFilters({
           <line x1="4" y1="17" x2="20" y2="17" />
         </svg>
         <span>فیلتر و مرتب‌سازی</span>
-        {(selectedCategory !== 'all' || sortBy !== 'newest') && (
+        {(selectedCategory !== 'all' || sortBy !== 'newest' || priceRange) && (
           <span className="h-1.5 w-1.5 rounded-full bg-brand-primary" />
         )}
       </button>
@@ -98,7 +104,22 @@ export default function ProductFilters({
               ))}
             </div>
           </div>
+<div className="mb-4">
+  <h3 className="mb-2 text-xs font-semibold text-muted-text p-2">بازه‌ی قیمت</h3>
+         <Slider
+            min={priceBounds.min}
+            max={priceBounds.max}
+            step={1000}
+            value={priceRange ?? [priceBounds.min, priceBounds.max]}
+            onValueChange={(val) => onPriceChange(val as [number, number])}
+          />
 
+  <div className="flex justify-between text-xs text-muted-text m-3">
+    <span>{(priceRange?.[0] ?? priceBounds.min).toLocaleString("fa-IR")} تومان</span>
+    <span>{(priceRange?.[1] ?? priceBounds.max).toLocaleString("fa-IR")} تومان</span>
+  </div>
+</div>
+ 
           <div className="mb-3 border-t border-border-main" />
 
           {/* مرتب‌سازی */}
@@ -115,6 +136,7 @@ export default function ProductFilters({
             ))}
           </div>
 
+
           {(selectedCategory !== 'all' || sortBy !== 'newest') && (
             <>
               <div className="my-3 border-t border-border-main" />
@@ -122,6 +144,7 @@ export default function ProductFilters({
                 onClick={() => {
                   onCategoryChange('all');
                   onSortChange('newest');
+                  onPriceChange(null);
                 }}
                 className="w-full rounded-lg px-3 py-2 text-center text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10"
               >

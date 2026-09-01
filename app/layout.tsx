@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/main/Navbar";
 import Backdrop from "@/components/ui/shares/backdrop/Backdrop";
+import { DirectionProvider } from "@base-ui/react";
 
 
 const geistSans = Geist({
@@ -34,11 +35,13 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
 
-          <main>
-            <Navbar />
-              <Backdrop/>
+        <main>
+          <Navbar />
+          <Backdrop />
+          <DirectionProvider direction="rtl">
             {children}
-          </main>
+          </DirectionProvider>
+        </main>
 
       </body>
     </html>

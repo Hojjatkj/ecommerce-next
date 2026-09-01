@@ -28,15 +28,15 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <div>
           <ProductImage product={product} />
           
-          <h3 className="mb-2 line-clamp-1 text-base font-bold text-[var(--color-text-main)] group-hover:text-[var(--color-brand-primary)] transition-colors">
+          <h3 className="mb-2 line-clamp-2 text-sm md:text-1xl md:font-bold  text-[var(--color-text-main)] group-hover:text-[var(--color-brand-primary)] transition-colors">
             {product.title}
           </h3>
 
           <div className="mt-2 flex items-center justify-between">
             {hasDiscount ? (
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row  items-center gap-2">
                 {/* قیمت اصلی تخفیف‌خورده با سبززمردی که با بنفش خفن میشه */}
-                <span className="text-lg font-black text-emerald-500 dark:text-emerald-400">
+                <span className="text-lg font-black  text-emerald-500 dark:text-emerald-400">
                   {finalPrice.toLocaleString("fa-IR")}
                   <span className="text-xs font-semibold mr-0.5">تومان</span>
                 </span>

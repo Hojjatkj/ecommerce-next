@@ -1,7 +1,9 @@
 "use client"
 
 import ProductDetail from "@/components/producPage/productDetails";
+import Breadcrumb from "@/components/ui/list/Breadcrumb";
 import { useProduct } from "@/hooks/useFilteredProducts";
+import { getCategoryName } from "@/lib/utils";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 
@@ -17,6 +19,14 @@ export default function ProductDetailPage() {
 
   return (
     <div>
+      <Breadcrumb
+        items={[
+          { label: "خانه", href: "/" },
+          { label: "محصولات", href: "/products" },
+          { label: getCategoryName(product), href: `/products?category=${getCategoryName(product)}` },
+          { label: product.title },
+        ]}
+      />
       <ProductDetail product={product} />
     </div>
   );
