@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/main/Navbar";
-import Backdrop from "@/components/ui/shares/backdrop/Backdrop";
 import { DirectionProvider } from "@base-ui/react";
-
+import BackdropLoader from "@/components/ui/shares/backdrop/BackdropLoader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +36,7 @@ export default function RootLayout({
 
         <main>
           <Navbar />
-          <Backdrop />
+         <BackdropLoader/>
           <DirectionProvider direction="rtl">
             {children}
           </DirectionProvider>

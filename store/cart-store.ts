@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { persist } from "zustand/middleware";
 
 export interface CartItem {
-    id: string;
+    id: number;
     name: string;
     price: number;
     imageUrl: string | null;
@@ -13,8 +13,11 @@ export interface CartItem {
 interface CartStore {
     items: CartItem[];
     addItem: (item: CartItem) => void;
-    removeItem: (id: string) => void;
+    removeItem: (id: number) => void;
     clearCart: () => void;
+    increaseQuantity: (id: number) => void;
+    decreaseQuantity: (id: number) => void;
+    removeItemCompletely: (id: number) => void;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -50,6 +53,31 @@ export const useCartStore = create<CartStore>()(
                 set(() => {
                     return { items: [] }
                 }),
+            increaseQuantity: (id: number) =>
+                set((state) => {
+                    return {
+                        items: state.items.map((item) =>
+                            item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+                        )
+                    };
+                }),
+            decreaseQuantity: (id: number) =>
+                set((state) => {
+                    return {
+                        items: state.items.map((item) =>
+                            item.id === id && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
+                        ).filter((item) => item.quantity > 0)
+                    };
+                }),
+                removeItemCompletely: (id: number) =>
+                set((state) => {
+                    return {
+                        items: state.items.filter((item) => item.id !== id)
+                    };
+                }),
+                    // getTotalItems: () => {
+                    //     return get().items.reduce((total, item) => total + item.quantity, 0);
+                    // }
         }),
         { name: "cart" }
     )

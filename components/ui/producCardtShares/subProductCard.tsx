@@ -23,7 +23,7 @@ const SubProductCard = ({ product }: { product: Product }) => {
         {quantityInCart === 0 ? (
           <button
             onClick={() => addItem(productToCartItem(product))}
-            className="w-full rounded-lg bg-(--color-brand-primary) py-2 text-sm font-semibold text-white"
+            className="w-full rounded-lg bg-brand-primary py-2 text-sm font-semibold text-white"
           >
             افزودن به سبد
           </button>

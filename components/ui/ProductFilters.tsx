@@ -104,22 +104,22 @@ export default function ProductFilters({
               ))}
             </div>
           </div>
-<div className="mb-4">
-  <h3 className="mb-2 text-xs font-semibold text-muted-text p-2">بازه‌ی قیمت</h3>
-         <Slider
-            min={priceBounds.min}
-            max={priceBounds.max}
-            step={1000}
-            value={priceRange ?? [priceBounds.min, priceBounds.max]}
-            onValueChange={(val) => onPriceChange(val as [number, number])}
-          />
+          <div className="mb-4">
+            <h3 className="mb-2 text-xs font-semibold text-muted-text p-2">بازه‌ی قیمت</h3>
+            <Slider
+              min={priceBounds.min}
+              max={priceBounds.max}
+              step={1000}
+              value={priceRange ?? [priceBounds.min, priceBounds.max]}
+              onValueChange={(val) => onPriceChange(val as [number, number])}
+            />
 
-  <div className="flex justify-between text-xs text-muted-text m-3">
-    <span>{(priceRange?.[0] ?? priceBounds.min).toLocaleString("fa-IR")} تومان</span>
-    <span>{(priceRange?.[1] ?? priceBounds.max).toLocaleString("fa-IR")} تومان</span>
-  </div>
-</div>
- 
+            <div className="flex justify-between text-xs text-muted-text m-3">
+              <span>{(priceRange?.[0] ?? priceBounds.min).toLocaleString("fa-IR")} تومان</span>
+              <span>{(priceRange?.[1] ?? priceBounds.max).toLocaleString("fa-IR")} تومان</span>
+            </div>
+          </div>
+
           <div className="mb-3 border-t border-border-main" />
 
           {/* مرتب‌سازی */}
