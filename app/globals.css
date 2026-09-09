@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* تعریف متغیرها برای استفاده مستقیم در Tailwind v4 */
+  /* ===== نام‌گذاری پروژه (bg-main, card-bg, ...) ===== */
   --color-bg-main: var(--background);
   --color-text-main: var(--foreground);
   --color-card-bg: var(--card);
@@ -14,6 +14,27 @@
   --color-brand-accent: var(--accent);
   --color-banner: var(--accent-section);
   --color-border-main: var(--border-color);
+
+  /* ===== نام‌گذاری پریمیتیوها (button, card, input, ...) ===== */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--muted);
+  --color-secondary-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border-color);
+  --color-input: var(--border-color);
+  --color-ring: var(--primary);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+
+  --radius-md: 0.5rem;
 }
 
 @layer base {
@@ -21,13 +42,13 @@
     /* تم لایت (Light Mode) */
     --background: #fdfbfd;
     --foreground: #1c102b;
-    
+
     --card: #ffffff;
     --card-foreground: #1c102b;
-    
+
     --muted: #f3eef8;
     --muted-foreground: #6b5c7e;
-    
+
     --primary: #490596;
     --primary-hover: #370373;
     --primary-foreground: #ffffff;
@@ -35,19 +56,23 @@
 
     --accent-section: #f3eef8;
     --border-color: #e9dfef;
+
+    /* وضعیت‌ها */
+    --destructive: #e11d48;
+    --success: #059669;
   }
 
   .dark {
     /* تم دارک (Dark Mode) */
     --background: #0d0614;
     --foreground: #f5effc;
-    
+
     --card: #160c23;
     --card-foreground: #f5effc;
-    
+
     --muted: #241437;
     --muted-foreground: #a693bd;
-    
+
     --primary: #7c3aed;
     --primary-hover: #6d28d9;
     --primary-foreground: #ffffff;
@@ -55,5 +80,64 @@
 
     --accent-section: #1b0c2e;
     --border-color: #2b1744;
+
+    /* وضعیت‌ها */
+    --destructive: #fb7185;
+    --success: #34d399;
+  }
+
+  /* باکس‌های فرم و کارت با هماهنگی کامل تم */
+  input,
+  select,
+  textarea {
+    color: var(--foreground);
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--primary) 25%, transparent);
+  }
+}
+
+
+/* ===== انیمیشن‌های دراپ ===== */
+
+@keyframes pulseDrop {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.25);
+    opacity: 1;
+  }
+}
+
+@keyframes orbitDrop {
+  0%, 100% {
+    transform: translate(calc(-50% + var(--ox, 0px)), calc(-50% + var(--oy, 0px))) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(calc(-50% + var(--ox, 0px)), calc(-50% + var(--oy, 0px))) scale(1.8);
+    opacity: 0.9;
+  }
+}
+
+@keyframes floatDrop {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.2;
+  }
+  25% {
+    transform: translate(30px, -60px) scale(1.6);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-20px, 40px) scale(0.8);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translate(50px, -20px) scale(1.4);
+    opacity: 0.7;
   }
 }

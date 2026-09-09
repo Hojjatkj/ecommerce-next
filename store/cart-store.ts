@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { persist } from "zustand/middleware";
 
 export interface CartItem {
-    id: number;
+    id: string;
     name: string;
     price: number;
     imageUrl: string | null;
@@ -13,11 +13,11 @@ export interface CartItem {
 interface CartStore {
     items: CartItem[];
     addItem: (item: CartItem) => void;
-    removeItem: (id: number) => void;
+    removeItem: (id: string) => void;
     clearCart: () => void;
-    increaseQuantity: (id: number) => void;
-    decreaseQuantity: (id: number) => void;
-    removeItemCompletely: (id: number) => void;
+    increaseQuantity: (id: string) => void;
+    decreaseQuantity: (id: string) => void;
+    removeItemCompletely: (id: string) => void;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -53,7 +53,7 @@ export const useCartStore = create<CartStore>()(
                 set(() => {
                     return { items: [] }
                 }),
-            increaseQuantity: (id: number) =>
+            increaseQuantity: (id: string) =>
                 set((state) => {
                     return {
                         items: state.items.map((item) =>
@@ -61,7 +61,7 @@ export const useCartStore = create<CartStore>()(
                         )
                     };
                 }),
-            decreaseQuantity: (id: number) =>
+            decreaseQuantity: (id: string) =>
                 set((state) => {
                     return {
                         items: state.items.map((item) =>
@@ -69,7 +69,7 @@ export const useCartStore = create<CartStore>()(
                         ).filter((item) => item.quantity > 0)
                     };
                 }),
-                removeItemCompletely: (id: number) =>
+                removeItemCompletely: (id: string) =>
                 set((state) => {
                     return {
                         items: state.items.filter((item) => item.id !== id)

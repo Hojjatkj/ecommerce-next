@@ -12,7 +12,7 @@ const Carousel = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="h-64 w-full animate-pulse bg-(--color-muted-bg) rounded-2xl flex items-center justify-center text-[var(--color-muted-text)] font-medium">
+      <div className="h-64 w-full animate-pulse bg-muted-bg rounded-2xl flex items-center justify-center text-muted-text font-medium">
         در حال بارگذاری اسلایدر...
       </div>
     )
@@ -34,23 +34,23 @@ export default function HeroSection({ products }: HeroSectionProps) {
       <Section variant="glow">
         <div className="grid md:grid-cols-2 gap-12 items-center dir-rtl">
           <div className="space-y-6 text-right">
-            <span className="inline-flex items-center gap-2 rounded-full bg-(--color-brand-primary)/10 px-4 py-1.5 text-xs font-semibold text-[var(--color-brand-primary)] border border-[var(--color-brand-primary)]/20">
-              <span className="h-2 w-2 rounded-full bg-(--color-brand-primary) animate-pulse" />
+            <span className="inline-flex items-center gap-2 rounded-full bg-brand-primary/10 px-4 py-1.5 text-xs font-semibold text-brand-primary border border-brand-primary/20">
+              <span className="h-2 w-2 rounded-full bg-brand-accent animate-pulse" />
               سری جدید ۲۰۲۶
             </span>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-[var(--color-text-main)] leading-tight">
-              به فروشگاه اینترنتی من <span className="bg-linear-to-r from-(--color-brand-primary) to-teal-500 bg-clip-text text-transparent">خوش آمدید</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-text-main leading-tight">
+              به فروشگاه اینترنتی من <span className="bg-linear-to-r from-brand-primary to-brand-accent bg-clip-text text-transparent">خوش آمدید</span>
             </h1>
 
-            <p className="text-lg text-(--color-muted-text) max-w-lg leading-relaxed">
+            <p className="text-lg text-muted-text max-w-lg leading-relaxed">
               جدیدترین محصولات را با بهترین قیمت‌ها کشف کنید. محصولات باکیفیت با طراحی مدرن.
             </p>
 
             <Button
               render={<Link href="/products" />}
               variant="default"
-              className="rounded-full px-8 py-6 text-base bg-(--color-brand-primary) hover:bg-[var(--color-brand-primary-hover)] text-[var(--color-brand-primary-fg)] shadow-lg shadow-[var(--color-brand-primary)]/20 transition-all hover:scale-105"
+              className="rounded-full px-8 py-6 text-base bg-brand-primary hover:bg-brand-primary-hover text-brand-primary-fg shadow-lg shadow-brand-primary/20 transition-all hover:scale-105"
             >
               مشاهده همه محصولات
             </Button>
@@ -66,7 +66,7 @@ export default function HeroSection({ products }: HeroSectionProps) {
         </div>
 
       </Section>
-      <Section className="w-full mx-auto shadow-xl bg-(--background)/50 backdrop-blur-md">
+      <Section className="w-full mx-auto shadow-xl bg-bg-main/50 backdrop-blur-md">
         <Carousel products={products} />
       </Section>
     </>

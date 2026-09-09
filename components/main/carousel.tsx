@@ -38,9 +38,9 @@ export const Carousel = ({ products }: CarouselProps) => {
           return (
             <SwiperSlide key={product.id}>
               <div className="flex flex-col md:flex-row-reverse w-full p-4 md:p-6 h-auto md:h-112 items-center gap-6" dir="rtl">
-                
+
                 {/* بخش تصویر */}
-                <div className="relative w-full md:w-1/2 h-64 md:h-full rounded-2xl overflow-hidden group shrink-0 bg-slate-100 dark:bg-slate-800">
+                <div className="relative w-full md:w-1/2 h-64 md:h-full rounded-2xl overflow-hidden group shrink-0 bg-muted-bg">
                   {mainImage && (
                     <Image
                       src={mainImage}
@@ -56,22 +56,22 @@ export const Carousel = ({ products }: CarouselProps) => {
                 {/* بخش محتوا */}
                 <div className="w-full md:w-1/2 flex flex-col justify-between h-full py-2">
                   <div className="space-y-4">
-                    <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-[var(--color-brand-primary)]/10 text-[var(--color-brand-primary)]">
+                    <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary">
                       پیشنهاد ویژه
                     </span>
-                    <h2 className="text-xl md:text-3xl font-extrabold text-[var(--color-text-main)] line-clamp-2 leading-tight">
+                    <h2 className="text-xl md:text-3xl font-extrabold text-text-main line-clamp-2 leading-tight">
                       {product.title}
                     </h2>
-                    <p className="text-[var(--color-muted-text)] text-sm md:text-base leading-relaxed line-clamp-3">
+                    <p className="text-muted-text text-sm md:text-base leading-relaxed line-clamp-3">
                       {product.description}
                     </p>
                   </div>
 
                   {/* قیمت */}
-                  <div className="pt-4 mt-6 border-t border-[var(--color-border-main)] flex items-center justify-between">
-                    <span className="text-[var(--color-muted-text)] text-xs md:text-sm font-medium">قیمت محصول:</span>
+                  <div className="pt-4 mt-6 border-t border-border-main flex items-center justify-between">
+                    <span className="text-muted-text text-xs md:text-sm font-medium">قیمت محصول:</span>
                     <div className="flex items-center gap-1">
-                      <span className="text-2xl font-black text-[var(--color-brand-primary)]">
+                      <span className="text-2xl font-black text-brand-primary">
                         {product.price?.toLocaleString("fa-IR")}
                         <span className="text-sm font-bold ml-1"> تومان</span>
                       </span>

@@ -7,7 +7,7 @@ interface HeroCardProps {
 
 export function HeroCard({ title, price, image }: HeroCardProps) {
   return (
-    <div  className="group relative overflow-hidden rounded-3xl bg-white/80 p-2 backdrop-blur-xl border border-gray-100 shadow-[0_10px_30px_rgba(0,0,0,0.08)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)]">
+    <div  className="group relative overflow-hidden rounded-3xl bg-card-bg/80 p-2 backdrop-blur-xl border border-border-main shadow-lg shadow-brand-primary/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-brand-primary/20">
 
       {/* Container عکس و اورلی */}
       <div className="relative h-[450px] w-full overflow-hidden rounded-2xl">
@@ -26,13 +26,13 @@ export function HeroCard({ title, price, image }: HeroCardProps) {
         {/* باکس شیشه‌ای متن در پایین کارت */}
         <div className="absolute bottom-4 inset-x-4 p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white flex justify-between items-end transition-transform duration-300 group-hover:translate-y-0">
           <div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400">پیشنهاد ویژه</span>
+            <span className="text-xs font-semibold uppercase tracking-wider text-brand-accent">پیشنهاد ویژه</span>
             <h3 className="text-xl font-bold mt-1 text-white drop-shadow-sm">{title}</h3>
           </div>
 
           <div className="text-right">
-            <span className="text-xs text-gray-300 block">قیمت</span>
-            <p className="text-2xl font-black text-emerald-300">{price.toLocaleString('fa-IR')} تومان</p>
+            <span className="text-xs text-white/70 block">قیمت</span>
+            <p className="text-2xl font-black text-brand-accent">{price.toLocaleString('fa-IR')} تومان</p>
           </div>
         </div>
       </div>

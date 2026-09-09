@@ -11,10 +11,10 @@ const SubProductCard = ({ product }: { product: Product }) => {
   const quantityInCart = cartItem?.quantity ?? 0;
 
   return (
-    <div className="mt-3 flex flex-col gap-3  border-gray-100 pt-3">
+    <div className="mt-3 flex flex-col gap-3 border-border-main pt-3">
       <div className="flex items-center flex-col sm:flex-row justify-between gap-2 text-xs">
-        <span className="shrink-0 text-gray-400">دسته بندی ها</span>
-        <span className="truncate rounded-full bg-blue-50 px-2.5 py-1 font-semibold text-blue-600">
+        <span className="shrink-0 text-muted-text">دسته بندی ها</span>
+        <span className="truncate rounded-full bg-brand-primary/10 px-2.5 py-1 font-semibold text-brand-primary">
           {getCategoryName(product)}
         </span>
       </div>
@@ -23,22 +23,22 @@ const SubProductCard = ({ product }: { product: Product }) => {
         {quantityInCart === 0 ? (
           <button
             onClick={() => addItem(productToCartItem(product))}
-            className="w-full rounded-lg bg-brand-primary py-2 text-sm font-semibold text-white"
+            className="w-full rounded-lg bg-brand-primary py-2 text-sm font-semibold text-brand-primary-fg transition-colors hover:bg-brand-primary-hover"
           >
             افزودن به سبد
           </button>
         ) : (
-          <div className="flex w-full items-center justify-between rounded-lg border border-gray-200">
+          <div className="flex w-full items-center justify-between rounded-lg border border-border-main">
             <button
               onClick={() => removeItem(String(product.id))}
-              className="px-3 py-2 text-lg font-bold text-gray-600"
+              className="px-3 py-2 text-lg font-bold text-text-main hover:text-destructive"
             >
               −
             </button>
             <span className="font-semibold">{quantityInCart}</span>
             <button
               onClick={() => addItem(productToCartItem(product))}
-              className="px-3 py-2 text-lg font-bold text-gray-600"
+              className="px-3 py-2 text-lg font-bold text-text-main hover:text-brand-primary"
             >
               +
             </button>

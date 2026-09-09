@@ -32,7 +32,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             {hasDiscount ? (
               <div className="flex flex-col sm:flex-row items-center gap-2">
                 {/* قیمت اصلی تخفیف‌خورده با سبززمردی که با بنفش خفن میشه */}
-                <span className="text-lg font-black text-emerald-500 dark:text-emerald-400">
+                <span className="text-lg font-black text-success">
                   {finalPrice.toLocaleString("fa-IR")}
                   <span className="text-xs font-semibold mr-0.5">تومان</span>
                 </span>

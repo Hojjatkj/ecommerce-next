@@ -10,7 +10,7 @@ export function Section({ children, className, variant = "default", ...props }: 
     <section
       className={cn(
         "relative overflow-hidden py-16 md:py-24  transition-colors",
-        variant === "muted" && "bg-gray-100/60",
+        variant === "muted" && "bg-muted-bg/60",
         className
       )}
       {...props}
@@ -18,7 +18,7 @@ export function Section({ children, className, variant = "default", ...props }: 
       {/* افکت نور محیطی (Ambient Glow) اگر variant روی glow باشه */}
       {variant === "glow" && (
         <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
-          <div className="h-[300px] w-[500px] rounded-full bg-gradient-to-tr from-emerald-500/15 to-teal-900/15 blur-[120px]" />
+          <div className="h-[300px] w-[500px] rounded-full bg-gradient-to-tr from-brand-primary/20 to-brand-accent/10 blur-[120px]" />
         </div>
       )}
 

@@ -9,7 +9,7 @@ interface UseFilteredProductsOptions {
   limit?: number;
   categoryId?: number;
   productId?: number;
-  initialData?: Product[]; // ۱. این فیلد اضافه شد
+  initialData?: Product[];
 }
 
 const cache = new Map<string, Product[]>();
@@ -26,7 +26,7 @@ function getCacheKey(options?: UseFilteredProductsOptions) {
 
 // ... تابع fetchProducts بدون هیچ تغییری سر جاش میمونه ...
 async function fetchProducts(key: string, options?: UseFilteredProductsOptions): Promise<Product[]> {
-  // کدهای این بخش دقیقاً همون چیزیه که خودت نوشتی
+
   let query = supabase.from('products').select(PRODUCT_SELECT_QUERY);
   if (options?.onlyDiscounts) {
     query = query.gt('discount_percent', 0).order('discount_percent', { ascending: false });
@@ -60,7 +60,7 @@ export default function useFilteredProducts(options?: UseFilteredProductsOptions
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // بقیه کد دقیقاً همونیه که خودت نوشتی. 
+    // بقیه کد دقیقاً همونیه که نوشتیم 
     // چون کش رو بالا پر کردیم، این شرط بلافاصله true میشه و فچ الکی نمیزنه!
     if (cache.has(key)) {
       setProducts(cache.get(key)!);

@@ -3,16 +3,25 @@
 import { Slider } from "@/components/ui/slider";
 import { useEffect, useRef, useState } from 'react';
 
-export type SortOption = 'newest' | 'price-asc' | 'price-desc' | 'discount';
+export type SortOption =
+  | 'newest'
+  | 'price-asc'
+  | 'price-desc'
+  | 'discount';
 
 interface ProductFiltersProps {
   categories: string[];
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
+
   sortBy: SortOption;
   onSortChange: (sort: SortOption) => void;
+
   priceRange: [number, number] | null;
-  priceBounds: { min: number; max: number };
+  priceBounds: {
+    min: number;
+    max: number;
+  };
   onPriceChange: (range: [number, number] | null) => void;
 }
 
@@ -23,7 +32,12 @@ const SORT_LABELS: Record<SortOption, string> = {
   discount: 'بیشترین تخفیف',
 };
 
-const SORT_OPTIONS: SortOption[] = ['newest', 'price-asc', 'price-desc', 'discount'];
+const SORT_OPTIONS: SortOption[] = [
+  'newest',
+  'price-asc',
+  'price-desc',
+  'discount',
+];
 
 export default function ProductFilters({
   categories,
@@ -38,29 +52,80 @@ export default function ProductFilters({
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  // بستن منو با کلیک بیرون از پنل
   useEffect(() => {
     if (!open) return;
+
     function handleClickOutside(e: MouseEvent) {
-      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
+      if (
+        panelRef.current &&
+        !panelRef.current.contains(e.target as Node)
+      ) {
         setOpen(false);
       }
     }
+
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, [open]);
 
   const itemClass = (active: boolean) =>
-    `block w-full rounded-lg px-3 py-2 text-right text-sm transition-colors ${active
-      ? 'bg-brand-primary/10 font-medium text-brand-primary'
-      : 'text-text-main hover:bg-muted-bg'
-    }`;
+    `
+      block
+      w-full
+      rounded-lg
+      px-3
+      py-2.5
+      text-right
+      text-sm
+      transition-colors
+      whitespace-nowrap
+      overflow-hidden
+      text-ellipsis
+      ${
+        active
+          ? 'bg-brand-primary/10 font-medium text-brand-primary'
+          : 'text-text-main hover:bg-muted-bg'
+      }
+    `;
+
+  const hasFilters =
+    selectedCategory !== 'all' ||
+    sortBy !== 'newest' ||
+    priceRange !== null;
 
   return (
-    <div className="relative" ref={panelRef}>
+    <div
+      ref={panelRef}
+      className="relative w-full sm:w-auto"
+    >
+      {/* Trigger */}
       <button
+        type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 rounded-xl border border-border-main bg-card-bg px-4 py-2.5 text-sm text-card-text shadow-sm transition-colors hover:bg-muted-bg"
+        className="
+          flex
+          w-full
+          sm:w-auto
+          shrink-0
+          items-center
+          justify-center
+          gap-2
+          rounded-xl
+          border
+          border-border-main
+          bg-card-bg
+          px-3
+          py-2.5
+          text-sm
+          text-card-text
+          shadow-sm
+          transition-colors
+          hover:bg-muted-bg
+          sm:px-4
+        "
       >
         <svg
           width="18"
@@ -70,83 +135,227 @@ export default function ProductFilters({
           stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
+          className="shrink-0"
         >
           <line x1="4" y1="7" x2="20" y2="7" />
           <line x1="4" y1="12" x2="20" y2="12" />
           <line x1="4" y1="17" x2="20" y2="17" />
         </svg>
-        <span>فیلتر و مرتب‌سازی</span>
-        {(selectedCategory !== 'all' || sortBy !== 'newest' || priceRange) && (
-          <span className="h-1.5 w-1.5 rounded-full bg-brand-primary" />
+
+        <span className="whitespace-nowrap">
+          فیلتر و مرتب‌سازی
+        </span>
+
+        {hasFilters && (
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-primary" />
         )}
       </button>
 
+      {/* Panel */}
       {open && (
-        <div className="absolute z-20 mt-2 w-72 max-w-[85vw] rounded-2xl border border-border-main bg-card-bg p-4 shadow-xl">
-          {/* دسته‌بندی */}
-          <div className="mb-4">
-            <h3 className="mb-2 text-xs font-semibold text-muted-text">دسته‌بندی</h3>
-            <div className="max-h-56 overflow-y-auto pr-1">
+        <div
+          className="
+            absolute
+            left-0
+            top-full
+            z-50
+            mt-2
+
+            w-[calc(100vw-2rem)]
+            max-w-sm
+
+            sm:w-80
+            md:w-96
+
+            max-h-[calc(100vh-7rem)]
+
+            overflow-y-auto
+            overscroll-contain
+
+            rounded-2xl
+            border
+            border-border-main
+            bg-card-bg
+            p-4
+            shadow-xl
+
+            scrollbar-thin
+          "
+        >
+          {/* =========================
+              دسته‌بندی
+          ========================== */}
+          <section className="mb-5">
+            <h3 className="mb-2 text-xs font-semibold text-muted-text">
+              دسته‌بندی
+            </h3>
+
+            <div
+              className="
+                max-h-44
+                overflow-y-auto
+                overscroll-contain
+                pr-1
+                space-y-1
+              "
+            >
               <button
+                type="button"
                 onClick={() => onCategoryChange('all')}
-                className={itemClass(selectedCategory === 'all')}
+                className={itemClass(
+                  selectedCategory === 'all'
+                )}
               >
                 همه دسته‌ها
               </button>
+
               {categories.map((cat) => (
                 <button
+                  type="button"
                   key={cat}
                   onClick={() => onCategoryChange(cat)}
-                  className={itemClass(selectedCategory === cat)}
+                  className={itemClass(
+                    selectedCategory === cat
+                  )}
                 >
                   {cat}
                 </button>
               ))}
             </div>
-          </div>
-          <div className="mb-4">
-            <h3 className="mb-2 text-xs font-semibold text-muted-text p-2">بازه‌ی قیمت</h3>
-            <Slider
-              min={priceBounds.min}
-              max={priceBounds.max}
-              step={1000}
-              value={priceRange ?? [priceBounds.min, priceBounds.max]}
-              onValueChange={(val) => onPriceChange(val as [number, number])}
-            />
+          </section>
 
-            <div className="flex justify-between text-xs text-muted-text m-3">
-              <span>{(priceRange?.[0] ?? priceBounds.min).toLocaleString("fa-IR")} تومان</span>
-              <span>{(priceRange?.[1] ?? priceBounds.max).toLocaleString("fa-IR")} تومان</span>
+          {/* =========================
+              بازه قیمت
+          ========================== */}
+          <section className="mb-5">
+            <h3 className="mb-4 text-xs font-semibold text-muted-text">
+              بازه‌ی قیمت
+            </h3>
+
+            <div className="px-2">
+              <Slider
+                min={priceBounds.min}
+                max={priceBounds.max}
+                step={1000}
+                value={
+                  priceRange ?? [
+                    priceBounds.min,
+                    priceBounds.max,
+                  ]
+                }
+                onValueChange={(val) =>
+                  onPriceChange(
+                    val as [number, number]
+                  )
+                }
+              />
             </div>
-          </div>
 
-          <div className="mb-3 border-t border-border-main" />
-
-          {/* مرتب‌سازی */}
-          <div>
-            <h3 className="mb-2 text-xs font-semibold text-muted-text">مرتب‌سازی</h3>
-            {SORT_OPTIONS.map((option) => (
-              <button
-                key={option}
-                onClick={() => onSortChange(option)}
-                className={itemClass(sortBy === option)}
+            {/* Price labels */}
+            <div
+              className="
+                mt-4
+                grid
+                grid-cols-2
+                gap-3
+                text-xs
+                text-muted-text
+              "
+            >
+              <div
+                className="
+                  min-w-0
+                  rounded-lg
+                  bg-muted-bg
+                  px-2
+                  py-2
+                  text-center
+                "
               >
-                {SORT_LABELS[option]}
-              </button>
-            ))}
-          </div>
+                <span className="block truncate">
+                  {(priceRange?.[0] ?? priceBounds.min)
+                    .toLocaleString("fa-IR")}
+                </span>
 
+                <span className="mt-0.5 block text-[10px]">
+                  تومان
+                </span>
+              </div>
 
-          {(selectedCategory !== 'all' || sortBy !== 'newest') && (
+              <div
+                className="
+                  min-w-0
+                  rounded-lg
+                  bg-muted-bg
+                  px-2
+                  py-2
+                  text-center
+                "
+              >
+                <span className="block truncate">
+                  {(priceRange?.[1] ?? priceBounds.max)
+                    .toLocaleString("fa-IR")}
+                </span>
+
+                <span className="mt-0.5 block text-[10px]">
+                  تومان
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <div className="mb-4 border-t border-border-main" />
+
+          {/* =========================
+              مرتب‌سازی
+          ========================== */}
+          <section>
+            <h3 className="mb-2 text-xs font-semibold text-muted-text">
+              مرتب‌سازی
+            </h3>
+
+            <div className="space-y-1">
+              {SORT_OPTIONS.map((option) => (
+                <button
+                  type="button"
+                  key={option}
+                  onClick={() => onSortChange(option)}
+                  className={itemClass(
+                    sortBy === option
+                  )}
+                >
+                  {SORT_LABELS[option]}
+                </button>
+              ))}
+            </div>
+          </section>
+
+          {/* =========================
+              حذف فیلترها
+          ========================== */}
+          {hasFilters && (
             <>
-              <div className="my-3 border-t border-border-main" />
+              <div className="my-4 border-t border-border-main" />
+
               <button
+                type="button"
                 onClick={() => {
                   onCategoryChange('all');
                   onSortChange('newest');
                   onPriceChange(null);
                 }}
-                className="w-full rounded-lg px-3 py-2 text-center text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10"
+                className="
+                  w-full
+                  rounded-lg
+                  px-3
+                  py-2.5
+                  text-center
+                  text-sm
+                  text-red-500
+                  transition-colors
+                  hover:bg-red-50
+                  dark:hover:bg-red-500/10
+                "
               >
                 حذف فیلترها
               </button>

@@ -14,7 +14,7 @@ const CartItem = ({ items }: Props) => {
     );
 
     return (
-        <div className="flex flex-col md:flex-row md:items-center gap-4 p-4 m-2 border rounded-xl shadow-sm">
+        <div className="flex flex-col md:flex-row md:items-center gap-4 p-4 m-2 rounded-xl border border-border-main bg-card-bg shadow-sm">
 
             {/* Product */}
             <div className="flex items-center gap-4 flex-1">
@@ -29,33 +29,33 @@ const CartItem = ({ items }: Props) => {
                         {items.name}
                     </h3>
 
-                    <p className="text-sm text-gray-500">
-                        قیمت واحد: {items.price.toFixed(2)} تومان
+                    <p className="text-sm text-muted-text">
+                        قیمت واحد: {items.price.toLocaleString()} تومان
                     </p>
                 </div>
             </div>
 
             {/* Quantity */}
             <div className="flex items-center gap-3">
-                <span className="text-sm text-gray-500">
+                <span className="text-sm text-muted-text">
                     تعداد
                 </span>
 
                 <div className="flex items-center border rounded-lg overflow-hidden">
                     <button
                         onClick={() => increaseQuantity(items.id)}
-                        className="px-3 py-1.5 hover:bg-gray-100"
+                        className="px-3 py-1.5 hover:bg-muted-bg"
                     >
                         +
                     </button>
 
-                    <span className="px-4 py-1.5 border-x">
+                    <span className="px-4 py-1.5 border-x border-border-main">
                         {items.quantity}
                     </span>
 
                     <button
                         onClick={() => decreaseQuantity(items.id)}
-                        className="px-3 py-1.5 hover:bg-gray-100"
+                        className="px-3 py-1.5 hover:bg-muted-bg"
                     >
                         -
                     </button>
@@ -63,14 +63,14 @@ const CartItem = ({ items }: Props) => {
             </div>
 
             {/* Total + Remove */}
-            <div className="flex items-center justify-between md:flex-col md:items-end gap-2 min-w-[120px]">
+            <div className="flex items-center justify-between md:flex-col md:items-end gap-2 min-w-30">
                 <span className="font-semibold">
-                    {(items.price * items.quantity)} تومان
+                    {((items.price * items.quantity).toLocaleString())} تومان
                 </span>
 
                 <button
                     onClick={() => removeItemCompletely(items.id)}
-                    className="text-sm text-red-500 hover:text-red-700"
+                    className="text-sm text-destructive hover:text-destructive/80"
                 >
                     حذف
                 </button>

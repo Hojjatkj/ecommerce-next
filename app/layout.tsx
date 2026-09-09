@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/main/Navbar";
 import { DirectionProvider } from "@base-ui/react";
 import BackdropLoader from "@/components/ui/shares/backdrop/BackdropLoader";
+import ThemeToggle from "@/components/ui/theme/ThemeToggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,8 +36,10 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
 
         <main>
+
           <Navbar />
-         <BackdropLoader/>
+          <ThemeToggle />
+          <BackdropLoader />
           <DirectionProvider direction="rtl">
             {children}
           </DirectionProvider>

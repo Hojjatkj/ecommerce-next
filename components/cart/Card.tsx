@@ -1,16 +1,17 @@
 "use client"
 import { useCartStore } from "@/store/cart-store";
 import CartItem from "./CartItem";
+import EmptyCart from "./EmptyCard";
 
 
 const Cart = () => {
     const items =useCartStore((state) => state.items);
 
     return (
-        <div>
+        <div className="flex flex-col gap-4 ">
             {items.length === 0 ? 
             <div>
-                <p>سبد خرید شما خالی است.</p>
+                <EmptyCart/>
             </div>
             : null  }
             {items.map((item) => (

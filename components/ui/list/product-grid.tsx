@@ -11,11 +11,11 @@ export interface ProductGridProps {
 
 function ProductCardSkeleton() {
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border-main)] bg-[var(--color-card-bg)] p-4">
-      <div className="mb-4 aspect-square w-full animate-pulse rounded-xl bg-[var(--color-muted-bg)]" />
-      <div className="mb-2 h-4 w-3/4 animate-pulse rounded bg-[var(--color-muted-bg)]" />
-      <div className="h-5 w-1/2 animate-pulse rounded bg-[var(--color-muted-bg)]" />
-      <div className="mt-4 h-8 w-full animate-pulse rounded bg-[var(--color-muted-bg)]" />
+    <div className="flex h-full flex-col rounded-2xl border border-border-main bg-card-bg p-4">
+      <div className="mb-4 aspect-square w-full animate-pulse rounded-xl bg-muted-bg" />
+      <div className="mb-2 h-4 w-3/4 animate-pulse rounded bg-muted-bg" />
+      <div className="h-5 w-1/2 animate-pulse rounded bg-muted-bg" />
+      <div className="mt-4 h-8 w-full animate-pulse rounded bg-muted-bg" />
     </div>
   );
 }
@@ -34,7 +34,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
       );
     }
     return (
-      <p className="py-10 text-center text-[var(--color-muted-text)] font-medium dir-rtl">
+      <p className="py-10 text-center text-muted-text font-medium dir-rtl">
         محصولی برای نمایش وجود ندارد...
       </p>
     );
