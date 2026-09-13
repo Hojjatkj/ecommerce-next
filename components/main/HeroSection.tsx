@@ -1,29 +1,23 @@
-'use client';
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/layout/section";
 import { HeroCard } from "@/components/ui/hero-card";
 import { Product } from "@/types/type";
-import dynamic from "next/dynamic";
+import { supabase } from "@/lib/supabase";
+import { PRODUCT_SELECT_QUERY } from "@/lib/queries";
+import CarouselClient from "./CarouselClient";
 
 
-const Carousel = dynamic(
-  () => import("@/components/main/carousel").then((mod) => mod.Carousel),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="h-64 w-full animate-pulse bg-muted-bg rounded-2xl flex items-center justify-center text-muted-text font-medium">
-        در حال بارگذاری اسلایدر...
-      </div>
-    )
-  }
-);
+// این کامپوننت خودش Server Component ه و خودش مسئول فچ دیتای خودشه —
+// page.tsx دیگه نیازی نیست بدونه کاروسل به چه محصولاتی نیاز داره
+export default async function HeroSection() {
+  const { data } = await supabase
+    .from("products")
+    .select(PRODUCT_SELECT_QUERY)
+.eq("category_id", 1)   // موبایل‌ها
+.order("discount_percent", { ascending: false, nullsFirst: false })   // بیشترین تخفیف اول
 
-interface HeroSectionProps {
-  products: Product[];
-}
-
-export default function HeroSection({ products }: HeroSectionProps) {
+  const products = (data ?? []) as unknown as Product[];
   const featured = products[0];
   const featuredImage = featured?.product_images
     ? [...featured.product_images].sort((a, b) => a.sort_order - b.sort_order)[0]?.url
@@ -66,8 +60,8 @@ export default function HeroSection({ products }: HeroSectionProps) {
         </div>
 
       </Section>
-      <Section className="w-full mx-auto shadow-xl bg-bg-main/50 backdrop-blur-md">
-        <Carousel products={products} />
+      <Section className="w-3/4 mx-auto shadow-xl bg-bg-main/50 backdrop-blur-md">
+        <CarouselClient products={products} />
       </Section>
     </>
   );

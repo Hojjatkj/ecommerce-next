@@ -18,7 +18,7 @@ export const Carousel = ({ products }: CarouselProps) => {
   if (!products || products.length === 0) return null;
 
   return (
-    <Card className="overflow-hidden h-full mx-auto shadow-2xl rounded-3xl border-0 bg-[var(--color-card-bg)]">
+    <Card className="overflow-hidden h-full mx-auto shadow-2xl rounded-3xl border-0 bg-(--color-card-bg)">
       <Swiper
         modules={[Autoplay, Navigation, Pagination]}
         spaceBetween={0}
