@@ -1,9 +1,18 @@
-import { type NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "./lib/supabase/supabase-middleware-helper";
 
 
 export async function middleware(request: NextRequest) {
-  const { supabaseResponse } = await updateSession(request);
+  const { supabaseResponse, user } = await updateSession(request);
+
+ if (!user && request.nextUrl.pathname === "/checkout") {
+  const loginUrl = new URL("/auth/login", request.url);
+
+  loginUrl.searchParams.set("next", "/checkout");
+  loginUrl.searchParams.set("reason", "auth-required");
+
+  return NextResponse.redirect(loginUrl);
+}
   return supabaseResponse;
 }
 

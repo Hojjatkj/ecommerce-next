@@ -32,25 +32,29 @@ const ProductDetail = ({ product }: { product: Product }) => {
               unoptimized
             />
           )}
-            </div>
-          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin">
-            {sortedImages.map((img) => (
+        </div>
+        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin">
+          {sortedImages
+            .filter((img) => img.url)
+            .map((img) => (
               <button
                 key={img.id}
                 onClick={() => setSelectedImage(img.url)}
                 className={`relative w-30 h-30 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all ${selectedImage === img.url
-                  ? 'border-blue-600 opacity-100 scale-95'
-                  : 'border-transparent opacity-60 hover:opacity-100'}`}
+                    ? "border-blue-600 opacity-100 scale-95"
+                    : "border-transparent opacity-60 hover:opacity-100"
+                  }`}
               >
                 <Image
                   src={img.url}
                   alt={`${product.title}-${img.sort_order}`}
                   fill
-                  className="object-cover ii" 
-                  unoptimized />
+                  className="object-cover"
+                  unoptimized
+                />
               </button>
             ))}
-          </div>
+        </div>
       </div>
       {/* بخش اطلاعات محصول */}
       <div className="flex flex-col justify-start gap-4">
@@ -60,11 +64,11 @@ const ProductDetail = ({ product }: { product: Product }) => {
           {product.price.toLocaleString()} تومان
         </p>
         <p className="text-gray-600 leading-relaxed">{product.description}</p>
-    
 
-<button onClick={() => addItem(productToCartItem(product))}>
-  افزودن به سبد
-</button>
+
+        <button onClick={() => addItem(productToCartItem(product))}>
+          افزودن به سبد
+        </button>
       </div>
     </div>
   )

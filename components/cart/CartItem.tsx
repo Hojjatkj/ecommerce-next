@@ -14,10 +14,10 @@ const CartItem = ({ items }: Props) => {
     );
 
     return (
-        <div className="flex flex-col md:flex-row md:items-center gap-4 p-4 m-2 rounded-xl border border-border-main bg-card-bg shadow-sm">
+        <div className="flex flex-colmd:flex-row md:items-center gap-4 p-4 m-2 rounded-xl border border-border-main bg-card-bg shadow-sm">
 
             {/* Product */}
-            <div className="flex items-center gap-4 flex-1">
+            <div className="flex items-center text-foreground  gap-4 flex-1">
                 <img
                     className="w-20 h-20 object-cover rounded-lg"
                     src={items.imageUrl ?? "/placeholder.png"}
@@ -29,15 +29,15 @@ const CartItem = ({ items }: Props) => {
                         {items.name}
                     </h3>
 
-                    <p className="text-sm text-muted-text">
+                    <p className="text-sm ">
                         قیمت واحد: {items.price.toLocaleString()} تومان
                     </p>
                 </div>
             </div>
 
             {/* Quantity */}
-            <div className="flex items-center gap-3">
-                <span className="text-sm text-muted-text">
+            <div className="flex items-center text-muted-text gap-3">
+                <span className="text-sm ">
                     تعداد
                 </span>
 
@@ -63,7 +63,7 @@ const CartItem = ({ items }: Props) => {
             </div>
 
             {/* Total + Remove */}
-            <div className="flex items-center justify-between md:flex-col md:items-end gap-2 min-w-30">
+            <div className="flex items-center text-muted-foreground justify-between md:flex-col md:items-end gap-2 min-w-30">
                 <span className="font-semibold">
                     {((items.price * items.quantity).toLocaleString())} تومان
                 </span>

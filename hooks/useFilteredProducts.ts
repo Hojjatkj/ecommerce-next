@@ -36,10 +36,14 @@ async function fetchProducts(key: string, options?: UseFilteredProductsOptions):
   if (options?.categoryId) query = query.eq('category_id', options.categoryId);
   if (options?.productId != null) query = query.eq('id', options.productId);
   if (options?.limit) query = query.limit(options.limit);
+const { data, error: fetchError } = await query;
 
-  const { data, error: fetchError } = await query;
-  if (fetchError) throw new Error('خطا در دریافت اطلاعات');
+if (fetchError) {
+  console.error("SUPABASE ERROR:", fetchError);
+  throw fetchError;
+}
 
+console.log("PRODUCT DATA:", data);
   const typed = (data ?? []) as unknown as Product[];
   cache.set(key, typed);
   return typed;

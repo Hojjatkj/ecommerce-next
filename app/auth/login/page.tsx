@@ -1,5 +1,6 @@
 "use client";
-
+import Swal from "sweetalert2";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -13,7 +14,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [showPassword,setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +37,18 @@ export default function LoginPage() {
     router.refresh(); // برای این‌که Navbar و بقیه‌ی Server Component ها وضعیت جدید کاربر رو ببینن
   };
 
+  const searchParams = useSearchParams();
+  if (searchParams.get("reason") === "auth-required") {
+    Swal.fire({
+      toast: true,
+      position: "bottom-end",
+      icon: "info",
+      title: "برای ادامه ابتدا وارد حساب کاربری شوید",
+      showConfirmButton: false,
+      timer: 3500,
+      timerProgressBar: true,
+    })
+  }
   return (
     <div className="mx-auto mt-16 w-full max-w-sm p-4">
       <h1 className="mb-6 text-center text-2xl font-bold text-text-main">
@@ -74,7 +87,7 @@ export default function LoginPage() {
               </svg>
             ) : (
               // آیکون چشم باز (وقتی رمز پنهانه)
-              <svg  width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                 <circle cx="12" cy="12" r="3" />
               </svg>
