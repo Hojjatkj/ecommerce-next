@@ -1,16 +1,16 @@
 // lib/utils.ts
-export interface discountInput {
+export interface DiscountInput {
     price: number
     discountPercent?: number
 }
 
-export interface discountResult {
-    hasDiscount: Boolean
+export interface DiscountResult {
+    hasDiscount: Boolean   
     finalPrice: number
     discountAmount: number
 }
 
-export function CalculateDiscount({ price, discountPercent }: discountInput): discountResult {
+export function calculateDiscount({ price, discountPercent }: DiscountInput): DiscountResult {
 
     const safePercent = discountPercent && discountPercent > 0 ? discountPercent : 0;
     const hasDiscount = safePercent > 0;

@@ -9,7 +9,7 @@ export function Section({ children, className, variant = "default", ...props }: 
   return (
     <section
       className={cn(
-        "relative overflow-hidden py-16 md:py-24  transition-colors",
+        "relative overflow-hidden py-10 md:py-14 transition-colors",
         variant === "muted" && "bg-muted-bg/60",
         className
       )}

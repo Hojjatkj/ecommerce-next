@@ -60,7 +60,7 @@ export default async function HeroSection() {
         </div>
 
       </Section>
-      <Section className="w-3/4 mx-auto shadow-xl bg-bg-main/50 backdrop-blur-md">
+      <Section className="w-full mx-auto shadow-xl bg-bg-main/50 backdrop-blur-md">
         <CarouselClient products={products} />
       </Section>
     </>

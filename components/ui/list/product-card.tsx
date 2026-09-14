@@ -1,5 +1,5 @@
 // components/ProductCard.tsx
-import { CalculateDiscount } from "@/lib/calculateDiscount";
+import { calculateDiscount } from "@/lib/calculateDiscount";
 import { Product } from "@/types/type";
 import Link from "next/link";
 import { DiscountBadge } from "../producCardtShares/discount-badge";
@@ -11,7 +11,7 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { hasDiscount, finalPrice } = CalculateDiscount({
+  const { hasDiscount, finalPrice } = calculateDiscount({
     price: product.price,
     discountPercent: product.discount_percent,
   });
