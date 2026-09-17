@@ -14,7 +14,7 @@ const CartItem = ({ items }: Props) => {
     );
 
     return (
-        <div className="flex flex-colmd:flex-row md:items-center gap-4 p-4 m-2 rounded-xl border border-border-main bg-card-bg shadow-sm">
+        <div className="flex flex-col md:flex-row md:items-center gap-4 p-4 m-2 rounded-xl border border-border-main bg-card-bg shadow-sm min-w-0">
 
             {/* Product */}
             <div className="flex items-center text-foreground  gap-4 flex-1">
@@ -56,6 +56,7 @@ const CartItem = ({ items }: Props) => {
                     <button
                         onClick={() => decreaseQuantity(items.id)}
                         className="px-3 py-1.5 hover:bg-muted-bg"
+                        disabled={items.quantity<=1}
                     >
                         -
                     </button>
