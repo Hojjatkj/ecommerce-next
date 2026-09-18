@@ -5,6 +5,7 @@ import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/supabase-client";
+import { safeRedirectPath } from "@/lib/safeRedirect";
 
 // ۱. این کامپوننت جداگانه برای بخشی که از useSearchParams استفاده می‌کنه
 function AuthRequiredToast() {
@@ -30,10 +31,17 @@ function AuthRequiredToast() {
   return null;
 }
 
-// ۲. فرم لاگین (بدون useSearchParams)
+// ۲. فرم لاگین (فقط خودِ فیلد `next` را از searchParams می‌خونه)
 function LoginForm() {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
+  const searchParams = useSearchParams();
+
+  // مسیر برگشت رو فقط یک‌بار و از همون اول اعتبارسنجی می‌کنیم
+  const nextPath = useMemo(
+    () => safeRedirectPath(searchParams.get("next")),
+    [searchParams]
+  );
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -58,7 +66,7 @@ function LoginForm() {
       return;
     }
 
-    router.push("/");
+    router.push(nextPath);
     router.refresh();
   };
 

@@ -39,11 +39,9 @@ async function fetchProducts(key: string, options?: UseFilteredProductsOptions):
 const { data, error: fetchError } = await query;
 
 if (fetchError) {
-  console.error("SUPABASE ERROR:", fetchError);
   throw fetchError;
 }
 
-console.log("PRODUCT DATA:", data);
   const typed = (data ?? []) as unknown as Product[];
   cache.set(key, typed);
   return typed;
