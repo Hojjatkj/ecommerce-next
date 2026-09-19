@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/main/Navbar";
-import { DirectionProvider } from "@base-ui/react";
+import { DirectionProvider } from "@base-ui/react/direction-provider";
 import BackdropLoader from "@/components/ui/shares/backdrop/BackdropLoader";
 import ThemeToggle from "@/components/ui/theme/ThemeToggle";
 
@@ -38,7 +38,7 @@ export default function RootLayout({
         <main>
 
           <Navbar />
-          <ThemeToggle />
+        
           <BackdropLoader />
           <DirectionProvider direction="rtl">
             {children}

@@ -1,9 +1,21 @@
 "use client";
 
 import Swal from "sweetalert2";
+import { useState } from "react";
 import { AiFillAlert } from "react-icons/ai";
-export default function SiteRules() {
+
+interface SiteRulesProps {
+  /** با هر باری که کاربر قوانین را باز کنه صدا زده می‌شه */
+  onOpen?: () => void;
+}
+
+export default function SiteRules({ onOpen }: SiteRulesProps) {
+  const [opened, setOpened] = useState(false);
+
   const showRules = () => {
+    setOpened(true);
+    onOpen?.();
+
     Swal.fire({
       title: "قوانین سایت",
       html: `
@@ -71,8 +83,12 @@ export default function SiteRules() {
   };
 
   return (
-    <button onClick={showRules} className="flex flex-row justify-center items-center gap-1">
-      قوانین سایت <AiFillAlert />
+    <button
+      type="button"
+      onClick={showRules}
+      className="flex flex-row justify-center items-center gap-1"
+    >
+      {opened ? "قوانین سایت (خوانده شده)" : "قوانین سایت"} <AiFillAlert />
     </button>
   );
 }

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useUser } from '@/hooks/useUser';
 import { House, ShoppingBag, ShoppingCart } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import ThemeToggle from '../ui/theme/ThemeToggle';
 
 const Navbar = () => {
   const { user, loading } = useUser();
@@ -47,13 +48,13 @@ const Navbar = () => {
         </Link>
       </div>
       {/* بخش حساب کاربری */}
-      <div className="shrink-0">
+      <div className="shrink-0 flex items-center">
         {loading ? (
-          <div className="h-4 w-12 animate-pulse rounded bg-muted-bg" />
+          <div className="h-3 w-12 animate-pulse rounded bg-muted-bg" />
         ) : user ? (
           <button
             onClick={logout}
-            className="text-sm lg:text-md text-(--muted) w-15 p-2 rounded-2xl 
+            className="text-sm lg:text-md text-(--muted) w-20 p-2  rounded-full 
             text-center bg-(--primary) hover:bg-(--primary-hover) hover:shadow-md transition-colors"
           >
             خروج
@@ -64,10 +65,12 @@ const Navbar = () => {
             className="text-xs sm:text-sm text-muted-text hover:text-brand-primary transition-colors"  >
             ورود
           </Link>
+           
         )}
+        <ThemeToggle />
       </div>
     </nav>
   );
 };
 
-export default Navbar;
+export default Navbar; 

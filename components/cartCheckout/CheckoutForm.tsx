@@ -7,7 +7,6 @@ import {
     type ValidationErrors,
 } from "@/lib/validation/checkoutValidation";
 import { useCheckoutSubmit } from "@/hooks/useCheckoutSubmit";
-import RulesOfbuisness from "./RulesOfbuisness";
 import SiteRules from "./RulesOfbuisness";
 
 export interface CheckoutFormData {
@@ -32,6 +31,9 @@ const CheckoutForm = () => {
 
     const [errors, setErrors] = useState<ValidationErrors>({});
     const [agreedToTerms, setAgreedToTerms] = useState(false);
+
+    // کاربر باید اول قوانین رو باز کنه تا تیک زدن فعال بشه
+    const [rulesRead, setRulesRead] = useState(false);
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -137,16 +139,27 @@ const CheckoutForm = () => {
                     />
                 )}
             </Field>
-            <SiteRules />
-            <label className="flex items-center gap-2 text-sm text-foreground">
+            <SiteRules onOpen={() => setRulesRead(true)} />
+            <label
+                className={`flex items-center gap-2 text-sm ${
+                    rulesRead
+                        ? "text-foreground"
+                        : "cursor-not-allowed text-muted-text"
+                }`}
+            >
                 <input
                     type="checkbox"
                     checked={agreedToTerms}
+                    disabled={!rulesRead}
                     onChange={(e) => setAgreedToTerms(e.target.checked)}
-                    className="size-4 accent-primary"
+                    className="size-4 accent-primary disabled:cursor-not-allowed"
                 />
 
-                <span>قوانین و مقررات را می‌پذیرم</span>
+                <span>
+                    {rulesRead
+                        ? "قوانین و مقررات را می‌پذیرم"
+                        : "برای فعال شدن، ابتدا قوانین سایت را مطالعه کنید"}
+                </span>
             </label>
 
             {submitError && (

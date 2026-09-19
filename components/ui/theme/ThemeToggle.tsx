@@ -33,11 +33,11 @@ const ThemeToggle = () => {
         <button
             onClick={toggleTheme}
             className={`
-        relative top-4 right-4 z-50 
+        relative top-0 right-2 z-50 
         p-3 rounded-full 
         transition-all duration-300 
         hover:scale-110 active:scale-95
-        shadow-lg
+        shadow-lg m-2
         ${isDark
                     ? "bg-[#1a0c2e] text-yellow-400 hover:bg-[#2a1a3e]"
                     : "bg-white text-purple-700 hover:bg-purple-50"
