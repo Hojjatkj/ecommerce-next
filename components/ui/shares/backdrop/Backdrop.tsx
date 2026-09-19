@@ -151,9 +151,7 @@ export default function Backdrop() {
     canvas.height = height;
     particles = initParticles(width, height);
 
-    type ThemeColors = ReturnType<typeof getColors>;
-
-    function drawConnections(colors: ThemeColors) {
+    function drawConnections() {
       const connectionDistance = 150;
 
       for (let i = 0; i < particles.length; i++) {
@@ -199,7 +197,7 @@ export default function Backdrop() {
       }
 
       // رسم خطوط
-      drawConnections(colors);
+      drawConnections();
 
       // نقطه نورانی ماوس
       if (isMouseMoving) {
@@ -216,12 +214,14 @@ export default function Backdrop() {
     animate();
 
     // رویدادهای ماوس
+    let mouseTimeout: ReturnType<typeof setTimeout> | undefined;
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
       isMouseMoving = true;
-      clearTimeout((window as any).mouseTimeout);
-      (window as any).mouseTimeout = setTimeout(() => {
+      clearTimeout(mouseTimeout);
+      mouseTimeout = setTimeout(() => {
         isMouseMoving = false;
       }, 100);
     };
@@ -232,6 +232,7 @@ export default function Backdrop() {
     return () => {
       isActive = false;
       if (animationId) cancelAnimationFrame(animationId);
+      clearTimeout(mouseTimeout);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
     };

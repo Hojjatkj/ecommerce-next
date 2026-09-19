@@ -5,7 +5,7 @@ export interface DiscountInput {
 }
 
 export interface DiscountResult {
-    hasDiscount: Boolean   
+    hasDiscount: boolean   
     finalPrice: number
     discountAmount: number
 }

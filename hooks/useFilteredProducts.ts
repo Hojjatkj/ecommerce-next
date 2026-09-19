@@ -65,13 +65,18 @@ export default function useFilteredProducts(options?: UseFilteredProductsOptions
     // بقیه کد دقیقاً همونیه که نوشتیم 
     // چون کش رو بالا پر کردیم، این شرط بلافاصله true میشه و فچ الکی نمیزنه!
     if (cache.has(key)) {
-      setProducts(cache.get(key)!);
-      setLoading(false);
-      return;
+      // setState داخل تایمر تا از cascading render همزمان جلوگیری بشه
+      const cachedData = cache.get(key)!;
+      const timer = setTimeout(() => {
+        setProducts(cachedData);
+        setLoading(false);
+      }, 0);
+      return () => clearTimeout(timer);
     }
 
     let cancelled = false;
-    setLoading(true);
+    // setLoading داخل تایمر تا از cascading render همزمان جلوگیری بشه
+    const loadingTimer = setTimeout(() => setLoading(true), 0);
 
     let request = inFlight.get(key);
     if (!request) {
@@ -97,8 +102,12 @@ export default function useFilteredProducts(options?: UseFilteredProductsOptions
 
     return () => {
       cancelled = true;
+      clearTimeout(loadingTimer);
     };
-  }, [key]); // options رو از وابستگی‌ها حذف کردم که فقط به key حساس باشه
+    // عمداً فقط به key وابسته‌ایم؛ چون key از خود options ساخته می‌شه و
+    // اضافه کردن options باعث فچ تکراری می‌شه.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
 
   return { products, loading, error };
 }

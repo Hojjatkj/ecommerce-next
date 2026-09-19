@@ -1,32 +1,27 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+const getInitialDark = () => {
+    if (typeof window === "undefined") return false;
+    const savedTheme = localStorage.getItem("theme");
+    const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    return savedTheme === "dark" || (!savedTheme && systemDark);
+};
 
 const ThemeToggle = () => {
-    const [isDark, setIsDark] = useState(false);
+    // مقدار اولیه رو مستقیم از localStorage/سیستم می\u200cخونیم تا نیازی به
+    // setState داخل effect نباشه (جلوگیری از cascading render).
+    const [isDark, setIsDark] = useState(getInitialDark);
 
-    useEffect(() => {
-        const savedTheme = localStorage.getItem('theme');
-        const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (savedTheme === "dark" || (!savedTheme && systemDark)) {
-            document.documentElement.classList.add("dark");
-            setIsDark(true);
-        } else {
-            document.documentElement.classList.remove("dark");
-            setIsDark(false);
-        }
-    }, [])
+    const applyTheme = (dark: boolean) => {
+        setIsDark(dark);
+        document.documentElement.classList.toggle("dark", dark);
+        localStorage.setItem("theme", dark ? "dark" : "light");
+    };
 
     const toggleTheme = () => {
-        const newTheme = !isDark;
-        setIsDark(newTheme);
-        if (newTheme) {
-            document.documentElement.classList.add("dark");
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.documentElement.classList.remove("dark");
-            localStorage.setItem('theme', 'light');
-        }
+        applyTheme(!isDark);
     };
 
     return (

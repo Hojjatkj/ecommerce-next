@@ -4,7 +4,6 @@ import "./globals.css";
 import Navbar from "@/components/main/Navbar";
 import { DirectionProvider } from "@base-ui/react/direction-provider";
 import BackdropLoader from "@/components/ui/shares/backdrop/BackdropLoader";
-import ThemeToggle from "@/components/ui/theme/ThemeToggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
