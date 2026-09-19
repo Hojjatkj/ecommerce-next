@@ -7,8 +7,8 @@ interface FieldProps {
 }
 
 const Field = ({ label, error, children }: FieldProps) => (
-    <div className="flex flex-col gap-1.5">
-        <label className="text-sm font-medium text-foreground">
+    <div className="flex flex-col gap-1">
+        <label className="text-xs font-medium text-foreground sm:text-sm">
             {label}
         </label>
         {children(Boolean(error))}
@@ -21,7 +21,7 @@ const Field = ({ label, error, children }: FieldProps) => (
 );
 
 export const inputClass = (invalid: boolean) =>
-    `w-full min-w-0 rounded-lg border bg-card-bg px-3 py-2 text-sm focus:outline-none focus:ring-2 transition-colors ${invalid
+    `w-full min-w-0 rounded-lg border bg-card-bg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 transition-colors ${invalid
         ? "border-destructive focus:ring-destructive/40"
         : "border-border-main focus:ring-ring"
     }`;

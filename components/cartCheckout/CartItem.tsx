@@ -14,22 +14,22 @@ const CartItem = ({ items }: Props) => {
     );
 
     return (
-        <div className="flex flex-col md:flex-row md:items-center gap-4 p-4 m-2 rounded-xl border border-border-main bg-card-bg shadow-sm min-w-0">
+        <div className="flex flex-col md:flex-row md:items-center gap-3 p-3 m-1 rounded-xl border border-border-main bg-card-bg shadow-sm min-w-0">
 
             {/* Product */}
             <div className="flex items-center text-foreground  gap-4 flex-1">
                 <img
-                    className="w-20 h-20 object-cover rounded-lg"
+                    className="w-14 h-14 object-cover rounded-lg"
                     src={items.imageUrl ?? "/placeholder.png"}
                     alt={items.name}
                 />
 
                 <div>
-                    <h3 className="font-semibold text-lg">
+                    <h3 className="font-semibold text-base">
                         {items.name}
                     </h3>
 
-                    <p className="text-sm ">
+                    <p className="text-xs ">
                         قیمت واحد: {items.price.toLocaleString()} تومان
                     </p>
                 </div>

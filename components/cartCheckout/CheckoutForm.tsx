@@ -63,7 +63,7 @@ const CheckoutForm = () => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="flex flex-col gap-4 w-full"
+            className="flex flex-col gap-2.5 w-full text-xs sm:text-sm"
         >
             <Field label="نام و نام خانوادگی" error={errors.fullName}>
                 {(invalid) => (
@@ -134,7 +134,7 @@ const CheckoutForm = () => {
                         value={formData.address}
                         onChange={handleChange}
                         placeholder="آدرس کامل"
-                        rows={4}
+                        rows={2}
                         className={`${inputClass(invalid)} resize-y`}
                     />
                 )}
@@ -169,7 +169,7 @@ const CheckoutForm = () => {
             <button
                 type="submit"
                 disabled={!agreedToTerms || isSubmitting}
-                className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full rounded-lg bg-primary px-4 py-1.5 text-sm font-bold text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 {isSubmitting ? "در حال انتقال به درگاه..." : "ثبت سفارش و پرداخت"}
             </button>
